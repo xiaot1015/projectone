@@ -6,64 +6,16 @@
  * @author tony
  */
 //引入UploadFile类
-import('ORG.Net.UploadFile');
 
-class UserAction extends AuthAction {
+class UserAction extends Action {
 
-    protected $grade_model;
-    protected $class_model;
-    protected $Major_model;
-    protected $Academy_model;
-    protected $School_model;
-    protected $Group_model;
-    protected $Class_model;
-    protected $School_list = array();
-    protected $Academy_list = array();
-    protected $Major_list = array();
-    protected $grade_list = array();
-    protected $group_list = array();
-    protected $class_list = array();
-    protected $school_fileds = 'campus_name,campus_id';
-    protected $academy_fields = 'academy_id,academy_name';
-    protected $major_fields = 'major_id,major_name';
-    protected $grade_fields = 'grade_id,grade_name';
-    protected $group_fields = 'team_id,team_name';
-    protected $class_fields = 'class_id,class_name';
-    protected $user_type = array(
-        '0' => '学生',
-        '1' => '教师',
-        '2' => '超级管理员'
-    );
 
-    public function __construct() {
-        parent::__construct();
+    public function index(){
 
-        $sysModel = M('System_info');
-        $sys = $sysModel->find();
-        session('is_verify', $sys['isverify']);
-        session('is_range', $sys['isrange']);
-
-        $this->grade_model = new GradeModel();
-        $this->class_model = new ClassModel();
-        $this->Major_model = new MajorModel();
-        $this->Academy_model = new AcademyModel();
-        $this->School_model = new SchoolModel();
-        $this->Group_model = new GroupModel();
-        $this->Class_model = new ClassModel();
-        $this->School_list = $this->School_model->get_list($this->school_fileds);
-        $this->Academy_list = $this->Academy_model->get_list($this->academy_fields, 'campus_id=' . $this->School_list[0]['campus_id']);
-        $this->grade_list = $this->grade_model->get_list();
-        $this->group_list = $this->Group_model->get_list();
-        $this->class_list = $this->Class_model->get_list();
-        $this->assign('Academy_list', $this->Academy_list);
-        $this->assign('School_list', $this->School_list);
-        $this->assign('grade_list', $this->grade_list);
-        $this->assign('group_list', $this->group_list);
-        $this->assign('class_list', $this->class_list);
-        $this->assign('user_type', $this->user_type);
+        $this->display('add');
     }
 
-    public function index() {
+    public function getlist() {
 
         $where = array();
         if (isset($_POST['search'])) {

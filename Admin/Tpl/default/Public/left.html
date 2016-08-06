@@ -1,0 +1,98 @@
+<div class="sidebar" id="sidebar">
+    <script type="text/javascript">
+        try {
+            ace.settings.check('sidebar', 'fixed')
+        } catch (e) {
+        }
+    </script>
+
+    <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+
+
+        <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+            <span class="btn btn-success"></span>
+
+            <span class="btn btn-info"></span>
+
+            <span class="btn btn-warning"></span>
+
+            <span class="btn btn-danger"></span>
+        </div>
+    </div><!-- #sidebar-shortcuts -->
+
+    <ul class="nav nav-list">
+
+        <li <?php if(in_array($model,$user_models)): ?> class='active' <?php endif;?>>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-user"></i>
+                <span class="menu-text"> 用户管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="{:U('User/index')}" class="dropdown-toggle">
+                        <i class="icon-double-angle-right"></i>
+                        人员管理
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{:U('user/group/index')}" class="dropdown-toggle">
+                        <i class="icon-double-angle-right"></i>
+                        团队管理
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li <?php if(in_array($model,$target_models)): ?> class='active' <?php endif;?>>
+            <a href="{:U('Targetcompaign/getlist')}" class="dropdown-toggle">
+                <i class="icon-gear"></i>
+                <span class="menu-text"> 靶场比赛管理 </span>
+            </a>
+        </li>
+        <li <?php if(in_array($model,$fight_models)): ?> class='active' <?php endif;?>>
+            <a href="{:U('Fightcompaign/index')}" class="dropdown-toggle">
+                <i class="icon-desktop"></i>
+                <span class="menu-text"> 对抗比赛管理 </span>
+            </a>
+        </li>
+        <li <?php if(in_array($model,$examination_models)): ?> class='active' <?php endif;?>>
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-inbox"></i>
+                <span class="menu-text"> 题库管理 </span>
+
+                <b class="arrow icon-angle-down"></b>
+            </a>
+            <ul class="submenu">
+                <li>
+                    <a href="{:U('TargetExamination/getlist')}" class="dropdown-toggle">
+                        <i class="icon-double-angle-right"></i>靶场题管理
+                    </a>
+                </li>
+                <li>
+                    <a href="{:U('Bank/getlist')}" class="dropdown-toggle">
+                        <i class="icon-double-angle-right"></i>类型管理
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li <?php if(in_array($model,$score_models)): ?> class='active' <?php endif;?>>
+            <a href="{:U('Score/getlist')}" class="dropdown-toggle">
+                <i class="icon-tags"></i>
+                <span class="menu-text"> 成绩管理 </span>
+            </a>
+        </li>
+    </ul><!-- /.nav-list -->
+
+    <div class="sidebar-collapse" id="sidebar-collapse">
+        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+    </div>
+
+    <script type="text/javascript">
+        try {
+            ace.settings.check('sidebar', 'collapsed')
+        } catch (e) {
+        }
+    </script>
+</div>
