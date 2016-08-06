@@ -1,0 +1,26 @@
+<div id="right">
+  <div  style="margin-left:100px;">
+    <form name="form" action="{:U('user/academy/add')}" method="post">
+      <div class="xiadanewedweg">
+        <p class="yhxxwemzia_b">学校：</p>
+        <select id="school" name='school' class="xialailewge">
+          <option value="">请选择学校</option>
+          <?php foreach($school_array as $key=>$val):?>
+          <option value="<?php echo $key;?>"><?php echo $val;?></option>
+          <?php endforeach;?>
+        </select>
+        <div class="clear"></div>
+      </div>
+      <div class="xiadanewedweg">
+        <p class="yhxxwemzia_b">学院：</p>
+        <input id="academy" name='academy' type="text" class="yonghuminwgdengl" />
+        <div class="clear"></div>
+      </div>
+
+      <div class="tijiawanigahnegg" style="margin-left:300px;margin-top:20px;">
+        <a href="javascript:form.submit()">提交</a>
+      </div>
+      <div class="clear"></div>
+    </form>
+  </div>
+</div>

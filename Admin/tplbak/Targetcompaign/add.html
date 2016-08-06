@@ -1,0 +1,340 @@
+<script src="__PUBLIC__/ace/assets/js/jquery-1.10.2.min.js"></script>
+<div class="breadcrumbs" id="breadcrumbs">
+  <script type="text/javascript">
+    try {
+      ace.settings.check('breadcrumbs', 'fixed')
+    } catch (e) {
+    }
+  </script>
+<style>
+
+.page-header1 h1 span{background-color:red;width:120px;float:left;postion:absolute;}
+.wordChecked{
+	background: #D4EFFF;
+}
+#selectedList em{
+	font-style: normal;
+	cursor: pointer;
+	margin-left: 9px;
+}
+#selectedList em:hover{
+	background: #D4EFFF;
+}
+.lilist{
+	line-height:25px;
+}
+</style>
+  <!-- <ul class="breadcrumb">
+    <li>
+      <i class="icon-home home-icon"></i>
+      <a href="#">靶场比赛管理</a>
+    </li>
+    <li class="active">添加</li>
+  </ul> --><!-- .breadcrumb -->
+</div>
+<!-- 弹出层 -->
+<if condition="$step eq '2'">
+<div id="keyworddiv" class="areadiv" style="display:none;border:1px solid #ccc;height:410px;width:700px;margin-left:5%;z-index:1002;position:absolute;background:#fff;">
+<div style="height:380px;width:700px;overflow-y:auto;background:#fff;">
+<table style="width:100%;" >
+	<tr style="border-bottom:1px dotted #ccc;">	
+		<td>学校名称：
+			<select name="schoollist" id="schoollist">
+				<option selected>--请选择--</option>
+				<foreach name="schoollist" item="school" key="schoolid">
+					<option value="{$schoolid}">{$school.campus_name}</option>
+				</foreach>
+			</select>
+		</td>
+	</tr>
+	<if condition="!empty($classlist)">
+	<foreach name="classlist" item="cval" key="ck">
+	<tr style="border-bottom:1px dotted #ccc;" name="classes" id="class{$ck}">		
+		<td name="cityarea">
+			<foreach name="cval" item="classobj" >
+			<div style="width:20%;float:left;font-size:14px;margin-top:10px;"><input type="checkbox" name="categoryid" value="{$classobj.class_id}" />{$classobj.class_name} &nbsp;
+			<if condition="!empty($usrlist[$classobj['class_id']])">
+				<php> foreach($usrlist[$classobj['class_id']] as  $kid=>$kname){</php>
+				<input type="hidden" name="kname" value="{$kname.user_id}" title="{$kname.user_name}">
+				<php>}</php>
+			</if>
+			</div>
+			</foreach>
+		</td>
+	</tr>
+	</foreach>
+	</if>
+	<tr><td id="showarea"></td></tr>
+</table>
+
+</div>
+<div style="text-align:center;margin-top:5px;">
+					<input type="button" value="保存" class="tijiao" onclick="winsub()" >
+					<input type="button" value="关闭" class="tijiao" onclick="winclose()" >
+</div>
+</div>
+</if>
+<!-- 弹出层 end-->  
+<div class="page-content">
+
+  <div class="page-header">
+    <h1>
+    <span data-id="1">
+       1, 基本信息
+    </span>
+    <span data-id="2">
+        <i class="icon-double-angle-right"></i>2, 选择人员
+    </span>
+    <span data-id="3">
+        <i class="icon-double-angle-right"></i>3, 选择试题
+      </span>
+      <span data-id="4">
+        <i class="icon-double-angle-right"></i>4, 发布
+      </span>
+    </h1>
+  </div><!-- /.page-header -->
+  <br/>
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+      <form class="form-horizontal" role="form" action="../Targetcompaign/edit" method="post" onsubmit="return sub();">
+       <if condition="$step eq '1'">
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">比赛名称: </label>
+          <div class="col-sm-9">
+            <input id="cname" name="cname" class="col-xs-10 col-sm-5" value="{$info.competition_name}" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">比赛时间: </label>
+          <div class="col-sm-6">
+			<div class="input-group">
+			<input class="form-control date-picker" id="starttime" name="starttime" value="{$info.starttime}"  />
+			<span class="input-group-addon">至</span>
+            <input class="form-control date-picker" id="endtime" name="endtime" value="{$info.endtime}" />
+            </div>
+          </div>
+        </div>
+        <elseif condition="$step eq '2'"/>
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">选择人员: </label>
+          <div class="col-sm-9" id="showarea">
+          		<input type="text" name="keywordInput" id="keywordInput" />
+          		<button class="btn btn-info" type="button" onclick="choose();" style="height:30px;">
+	              选择组织
+	           </button>
+          </div>
+          	<div id="searchdiv" style="border:1 solid black;height:200px;width:200px;display:none;overflow-y:auto;background-color:#fafafa;position:absolute;margin-left:26%;margin-top:29px;z-index:1002;">
+				<ul id="wordsList" style="list-style-type:none;padding-left:0px;cursor:pointer;">
+				</ul>
+				<p class="btns" style="margin-left: 10px;">
+					<input type="button" class="ok" value="确定">
+					<input type="button" class="cancel" value="取消">
+				</p>
+			</div> 
+			<div id="selectedList" style="max-height:150px;overflow-y:auto;border:1px solid  #fff;margin-left:26%;">
+				<foreach name="plist" item="pid">
+				<em title="点击删除">
+					<span>{$usrkvlist[$pid]}</span>
+					<input type="hidden" name="kyids" value="{$pid}" />
+				</em>
+				</foreach>
+			</div>       
+        </div>
+        <input type="hidden" id="uids" name="uids" value="" />
+        <elseif condition="$step eq '3'"/>
+        
+        </if>
+        
+        <input type="hidden" id="id"  name="id" value="{$id}"/>
+        <input type="hidden" id="type" name="type" value="{$type}"/>
+        <input type="hidden" id="step" name="step" value="{$step}"/>
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-3 col-md-9">
+          <if condition="$step eq '4'">
+			<button class="btn btn-info" type="button" onclick="sub();">
+              <i class="icon-ok bigger-110"></i> 下一步
+            </button>
+          <else />
+            <button class="btn btn-info" type="submit">
+              <i class="icon-ok bigger-110"></i> 下一步
+            </button>
+          </if>
+          </div>
+        </div>
+        
+      </form>
+      <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+  </div>
+</div><!-- /.page-content -->
+
+<script type="text/javascript">
+function choose(){
+	$("tr[name='classes']").hide();
+	$("#keyworddiv").find("input[type='checkbox']").prop("checked",false);
+	showmark();
+	var div = $("#keyworddiv");
+	div.show();
+	//$(document.body).append(div);
+}
+
+var selectedItem=$('<em title="点击删除"><span></span><input type="hidden" name="kyids"></em>&nbsp;');
+// 弹窗
+function winsub(){
+	var temps =[];
+	$('#keyworddiv').find("input[name='categoryid']:checked").each(function(){
+		$(this).parent().find('input[name="kname"]').each(function(){
+			var ktxt = $(this).prop("title"),
+				kid = $(this).val(),
+				k_cloneitem = selectedItem.clone();
+			var markEle=$("#selectedList").find("input[value='"+kid+"']");
+			if(markEle.length===0){
+				k_cloneitem.find("span").text(ktxt).end().find("input").attr("value",kid);
+				temps.push(k_cloneitem);
+			}
+		});
+	});		
+	$("#selectedList").append(temps);
+	winclose();
+}
+//显示遮罩层
+function showmark() {
+        var bw = $(window).width();
+        var bh = $(window).height();
+        var e = $('<div></div>');
+        e.css('background', '#000');
+        e.css('width', bw + 'px');
+        e.css('height', bh + 'px');
+        e.css('position', 'absolute');
+        e.css('left', '0');
+        e.css('top', '0');
+        e.css('-khtml-opacity', '0.5');
+        e.css('-moz-opacity', '0.5');
+        e.css('opacity', '0.5');
+        e.css('filter', 'alpha(opacity=50)');
+        e.css('zIndex', '1001');
+        e.attr('id', 'masker');
+        $(document.body).append(e);
+}
+    //关闭遮罩层
+function winclose() {
+		$("#keyworddiv").hide();
+        $('#masker').remove();
+}
+//关键词下拉
+var wordItem=$("<li><input type='checkbox' class='checkWord'/><span data-id='' class='wordText'></span></li>");
+$("#keywordInput").keyup(function(){
+	var currVal=$.trim($(this).val()),
+		postUrl="{:U('Targetcompaign/membersearch')}";
+		$("#wordsList").empty();
+		if(currVal){
+			$.post(postUrl,{keyword:currVal},function(data){
+			if(data.status == 1){
+					var wordList=$("#wordsList").empty(),
+						result=data.data,
+						items=[];
+					$.each(result,function(key,value){
+						var clonedItem=wordItem.clone();
+						clonedItem.find(".wordText").text(value.user_name).attr("data-id",key);
+						items.push(clonedItem);
+					});
+					wordList.append(items);
+					$("#wordsList").parent().show();
+			}
+			});
+	}
+
+});
+
+$("#wordsList").on("click","li",function(){
+	var currEle=$(this),
+		cb=currEle.find(".checkWord");
+	if(currEle.hasClass("wordChecked")){
+		currEle.removeClass("wordChecked");
+		cb.prop("checked",false);
+	}else{
+		currEle.addClass("wordChecked");
+		cb.prop("checked",true);
+	}
+});
+//确定
+$("#searchdiv .btns .ok").click(function(){
+	var selected=$("#wordsList").find("li.wordChecked"),
+		temps=[];
+	$.each(selected, function() {    
+		var id= $(this).find(".wordText").attr("data-id"),
+			txt=$(this).find(".wordText").text(),
+			clonedItem=selectedItem.clone();
+		var markEle=$("#selectedList").find("input[value='"+id+"']");
+		if(markEle.length===0){
+			clonedItem.find("span").text(txt)
+					.end().find("input").attr("value",id);
+			temps.push(clonedItem);
+		}
+	});
+	$("#selectedList").append(temps);
+	$("#wordsList").parent().hide();
+});
+//取消
+$("#searchdiv .btns .cancel").click(function(){
+	$("#wordsList").parent().hide();
+});
+
+$("#selectedList").on("click","em",function(){
+	$(this).remove();
+});
+
+$("#schoollist").on("change",function(){
+	$("tr[name='classes']").hide();
+	var scid = $(this).val();
+	$("#class"+scid).show();
+});
+
+$("input[name='categoryid']").on("click",function(){
+	$("#showarea").html("");
+	var str = "";
+	$("input[name='kname']").each(function(m,o){
+		if($(this).parent().find("input[name='categoryid']").prop('checked') === true){
+			str += $(this).attr("title")+",";
+		}
+	});
+	$("#showarea").html(str);
+
+});
+$(document).ready(function(){
+
+});
+
+function sub(){
+	var stp = $("#step").val();
+	if(stp == 1){
+		if($("#cname") && $("#cname").val() == ""){
+			alert("比赛名称不能为空");
+			return false;
+		}
+
+		if($("#starttime") && $("#starttime").val() == ""){
+			alert("比赛时间不能为空");
+			return false;
+		}
+		if($("#endtime") && $("#endtime").val() == ""){
+			alert("比赛时间不能为空");
+			return false;
+		}
+	}else if(stp == 2){
+		var uids = '';
+		$("input[name='kyids']").each(function(m,obj){
+			uids +=$(this).val()+",";
+		});
+		$("#uids").val(uids);
+		if(uids == ""){
+			alert("还没有选择人员");
+			return false;
+		}
+	}
+
+}
+
+
+</script>

@@ -1,0 +1,40 @@
+<div id="right">
+
+ <div class="tijiawanigahnegg">
+     <a href="{:U('Score/getlist')}">返回</a>
+     <a href="{:U('Score/targetlistdetail',array('id'=>$id))}">详细成绩</a>
+  </div>
+  <span style="line-height:40px;color:#fff;font-size:14px;">如视频不能打开<a href="{:U('Score/downvlc')}" style="color:red;">(点此下载）</a>插件,64位系统<a href="{:U('Score/downvlc',array('type'=>'2'))}" style="color:red;">(点此下载）</a></span>
+  <table style="width:600px;margin-top:35px">
+    <tr>
+      <td>ID</td>
+      <td>名称</td>
+      <td>成绩</td>
+    </tr>
+    <foreach name="list" item="info" >
+      <tr>
+        <td>{$info.score_id}</td>
+        <td>{$info.user_name}</td>
+        <td>{$info.score_get}</td>
+      </tr>
+    </foreach>
+      <tr><td align="right" colspan="3">{$page}</td></tr>
+  </table>
+</div>
+
+<div style="border:1px solid #fff;width:520px;height:520px;float:right;position:absolute;margin-left:700px;margin-top:50px;">
+  <div style="border:1px solid #fff;height:250px;width:250px;float:left;position:absolute;margin-left:5px;">
+  <iframe src="__PUBLIC__/admin/flash/vlcpage1.html" height="250px" width="250px;" scrolling="no" frameborder="0"></iframe>   
+  </div>
+  <div style="border:1px solid #fff;height:250px;width:250px;float:left;position:absolute;margin-left:265px;">
+  <iframe src="__PUBLIC__/admin/flash/vlcpage2.html" height="250px" width="250px;" scrolling="no" frameborder="0"></iframe> 
+   </div>
+  <div style="border:1px solid #fff;height:250px;width:250px;float:left;position:absolute;margin-left:5px;margin-top:265px;">
+  <iframe src="__PUBLIC__/admin/flash/vlcpage3.html" height="250px" width="250px;" scrolling="no" frameborder="0"></iframe>    
+  </div>
+  <div style="border:1px solid #fff;height:250px;width:250px;float:left;position:absolute;margin-top:265px;margin-left:265px;">
+  <iframe src="__PUBLIC__/admin/flash/vlcpage4.html" height="250px" width="250px;" scrolling="no" frameborder="0"></iframe> 
+   </div>
+</div>
+
+

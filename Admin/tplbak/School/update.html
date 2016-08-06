@@ -1,0 +1,56 @@
+<div class="breadcrumbs" id="breadcrumbs">
+  <script type="text/javascript">
+    try {
+      ace.settings.check('breadcrumbs', 'fixed')
+    } catch (e) {
+    }
+  </script>
+
+  <!-- <ul class="breadcrumb">
+    <li>
+      <i class="icon-home home-icon"></i>
+      <a href="#">学校管理</a>
+    </li>
+    <li class="active">修改</li>
+  </ul> --><!-- .breadcrumb -->
+
+</div>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      学校管理
+      <small>
+        <i class="icon-double-angle-right"></i>
+        修改
+      </small>
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+      <form class="form-horizontal" method='post' action="{:U('School/update')}">
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 学校名称 </label>
+
+          <div class="col-sm-9">
+            <input type="text" id="form-field-1" placeholder="学校名称" class="hidden" name='school_id' value="<?php echo $info['campus_id']?>">
+            <input type="text" id="form-field-1" placeholder="学校名称" class="col-xs-10 col-sm-5" name='school_name' value="<?php echo $info['campus_name']?>">
+          </div>
+        </div>
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-3 col-md-9">
+            <button class="btn btn-info" type="submit">
+              <i class="icon-ok bigger-110"></i>
+              提交
+            </button>
+
+          </div>
+        </div>
+
+      </form>
+      <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+  </div>
+</div><!-- /.page-content -->

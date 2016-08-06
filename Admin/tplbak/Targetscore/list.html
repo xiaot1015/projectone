@@ -1,0 +1,136 @@
+<div class="breadcrumbs" id="breadcrumbs">
+  <script type="text/javascript">
+    try {
+      ace.settings.check('breadcrumbs', 'fixed')
+    } catch (e) {
+    }
+  </script>
+
+  <ul class="breadcrumb">
+    <li>
+      <i class="icon-home home-icon"></i>
+      <a href="#">靶场赛成绩</a>
+    </li>
+    <li class="active">各成绩列表</li>
+  </ul><!-- .breadcrumb -->
+</div>
+
+<div class="page-content">
+  <div class="page-header">
+    <div class="col-sm-12">
+      <div class="widget-box">
+        <div class="widget-header">
+          <h4>按条件搜索</h4>
+        </div>
+
+        <div class="widget-body">
+          <div class="widget-main">
+            <form class="form-inline" name="" action="" method="">
+              <label>题目名称</label>
+              <input type="text" class="input-small" placeholder="题目名称">
+              <label>目标机</label>
+              <input type="text" class="input-small" placeholder="目标机">
+              <button type="button" class="btn btn-info btn-sm">
+                <i class="icon-key bigger-110"></i> 搜索
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-6"></div>
+
+    </div>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+        	<ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+              <li class="li-new-mail pull-left">
+                <a  href="../ResistExamination/add" class="btn-new-mail">
+                  <span class="btn bt1n-small btn-purple no-border">
+                    
+                    <span class="bigger-110">新建</span>
+                  </span>
+                </a>
+              </li><!-- ./li-new-mail -->
+
+              <li class="li-new-mail pull-left">
+                <a href="javascript:void(0);" class="btn-new-mail" onclick="del();">
+                  <span class="btn bt1n-small btn-purple no-border">
+                    
+                    <span class="bigger-110">删除</span>
+                  </span>
+                </a>
+              </li><!-- ./li-new-mail -->
+            </ul>
+            
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+                  <th class="center">
+                    <label>
+                      <input type="checkbox" class="ace">
+                      <span class="lbl"></span>
+                    </label>
+                  </th>
+                  <th>ID</th>
+                  <th>题目</th>
+                  <th>分类</th>
+                  <th>分数</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+              <foreach name="list" item="info" >
+                <tr>
+                  <td class="center">
+                    <label>
+                      <input type="checkbox" class="ace" data-id="{$info.resistcomp_id}">
+                      <span class="lbl"></span>
+                    </label>
+                  </td>
+                  <td>{$info.resistcomp_id}</td>
+                  <td>{$info.question}</td>
+                  <td>{$info.bank_type_id}</td>
+                  <td>{$info.score}</td>
+                  
+                  <td class="hidden-480">
+                    <a class="btn btn-xs btn-info" href="../ResistExamination/add?id={$info.resistcomp_id}">修改</a>
+                    <button class="btn btn-xs btn-danger" onclick="del({$info.resistcomp_id})")>删除</button>
+                  </td>
+                </tr>
+                </foreach>
+              </tbody>
+            </table>
+            <div class="row"><div class="col-sm-6"><div class="dataTables_info" id="sample-table-2_info">Showing 1 to 10 of 23 entries</div></div><div class="col-sm-6"><div class="dataTables_paginate paging_bootstrap"><ul class="pagination"><li class="prev disabled"><a href="#"><i class="icon-double-angle-left"></i></a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li class="next"><a href="#"><i class="icon-double-angle-right"></i></a></li></ul></div></div></div>
+          </div>
+          
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    
+    <!-- PAGE CONTENT ENDS -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+</div>
+<script type="text/javascript">
+function del(id){
+	var tmp = window.confirm("确定要执行该操作吗？");
+	if (tmp === true){
+		var url = "../ResistExamination/delete";
+		$.post(url,{id:id},function(data){
+			if(data.status == 1){
+				alert(data.info);
+				window.location.reload();
+			}else{
+				alert(data.info);
+				return false;
+			}
+		});
+	}
+}
+</script>

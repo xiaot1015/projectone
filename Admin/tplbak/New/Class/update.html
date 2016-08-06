@@ -1,0 +1,67 @@
+<div id="right">
+    <div  style="margin-left:100px;">
+        <form name="form" method="post">
+            <div class="xiadanewedweg">
+                <p class="yhxxwemzia_b">学校：</p>
+                <select  id="school" name='school' class="xialailewge">
+                    <option value='' selected="selected">请选择</option>
+                    <?php foreach ($school_array as $key=>$val):?>
+                    <option value="<?php echo $key;?>"><?php echo $val?></option>
+                    <?php endforeach;?>
+                </select>
+                <div class="clear"></div>
+            </div>
+            <div class="xiadanewedweg">
+                <p class="yhxxwemzia_b">学院：</p>
+                <select name="academy" id="academy" class="xialailewge">
+                    <option value=''>请选择</option>
+                </select>
+                <div class="clear"></div>
+            </div>
+            <div class="xiadanewedweg">
+                <p class="yhxxwemzia_b">专业：</p>
+                <select class="xialailewge" id="major" name='major'>
+                    <option value=''>请选择</option>
+                </select>
+                <div class="clear"></div>
+            </div>
+            <div class="xiadanewedweg">
+                <p class="yhxxwemzia_b">年级：</p>
+                <select class="xialailewge" id="grade" name='grade'>
+                    <option value=''>请选择</option>
+                    <?php foreach ($grade_array as $key=>$val):?>
+                    <option value="<?php echo $key?>" <?php if($res['grade_id']==$key):?>selected<?php endif?>><?php echo $val?></option>
+                    <?php endforeach;?>
+                </select>
+                <div class="clear"></div>
+            </div>
+            <div class="xiadanewedweg">
+                <p class="yhxxwemzia_b">班级：</p>
+                <input type="text" id="class" placeholder="班级名称" value="<?php echo $res['class_name'];?>" class="yonghuminwgdengl" name="class" onmouseout="get_teacher_list('{:U('User / get_teacher_list')}')">
+                <div class="clear"></div>
+            </div>
+
+            <div class="tijiawanigahnegg" style="margin-left:300px;margin-top:20px;">
+                <a href="javascript:form.submit()">提交</a>
+            </div>
+            <div class="clear"></div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('#school').change(function () {
+        $.get("__APP__/User/get", {campus: $(this).val()}, function (res) {
+            var data = "<option value=''>=选择学院=</option>" + res.data;
+            $('#academy').html(data);
+        }, 'json');
+        //$('#school_name').val($('#school option:selected').text());
+    });
+    $('#academy').change(function () {
+        $.get("__APP__/User/get", {academy: $(this).val()}, function (res) {
+            var data = "<option value=''>=选择专业=</option>" + res.data;
+            $('#major').html(data);
+        }, 'json');
+        //$('#academy_name').val($('#academy option:selected').text());
+    });
+</script>

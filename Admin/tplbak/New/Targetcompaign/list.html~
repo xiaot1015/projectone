@@ -1,0 +1,76 @@
+<script src="__PUBLIC__/ace/assets/js/jquery-1.10.2.min.js"></script>
+<div id="right">
+<div id="search">
+        <form action="{:U('Targetcompaign/getlist')}" method="post">
+          比赛名称：<input type="text" id="text" name="cname" value="{$cname}">
+          <img src="__PUBLIC__/admin/images/search.png">
+          <button type="submit">搜索</button>
+        </form> 
+      </div>
+      <div id="new" class="tijiawanigahnegg">
+        <a href="{:U('Targetcompaign/add')}"></a>
+      </div>
+      <table>
+        <tr>
+          <td></td>
+          <td>ID</td>
+          <td>比赛名称</td>
+          <td>题量</td>
+          <td>比赛时间</td>
+          <td>参数人数</td>
+          <td>比赛管理</td>
+          <td>靶机管理</td>
+          <td>成绩管理</td>
+        </tr>
+        <foreach name="list" item="info" >
+        <tr>
+          <td class="center">
+            <label>
+              <input type="checkbox" class="ace" data-id="{$info.single_id}">
+              <span class="lbl"></span>
+            </label>
+          </td>
+          <td>{$info.competition_id}</td>
+          <td>{$info.competition_name}</td>
+          <td><a href="{:U('Targetcompaign/showquestions',array('id'=>$info['competition_id']))}">{$info.question_num}题</a></td>
+          <td>{$info.starttime} 至  {$info.endtime}</td>
+          <td><a href="{:U('Targetcompaign/showmember',array('id'=>$info['competition_id']))}">{$info.member_num}人</a></td>
+          <td> 
+            <a href="../Targetcompaign/add?id={$info.competition_id}">修改</a>
+            <a href="javascript:void(0);" onclick="del({$info.competition_id})")>删除</a>
+         </td>
+          <td class="hidden-480">
+            <a  href="../Targetcompaign/targetlist?id={$info.competition_id}">管理</a>
+          </td>
+          <td class="hidden-480">
+            <a  href="../Targetcompaign/export?id={$info.competition_id}">导出</a>
+          </td>
+        </tr>
+         </foreach>
+         <tr><td colspan="9">{$page}</td></tr>
+      </table>
+  </div>
+  <div id="footerright">
+    <ul>
+     
+    </ul>
+  </div>
+
+
+<script type="text/javascript">
+function del(id){
+  var tmp = window.confirm("确定要执行该操作吗？");
+  if (tmp === true){
+    var url = "../Targetcompaign/delete";
+    $.post(url,{id:id},function(data){
+      if(data.status == 1){
+        alert(data.info);
+        window.location.reload();
+      }else{
+        alert(data.info);
+        return false;
+      }
+    });
+  }
+}
+</script>

@@ -1,0 +1,17 @@
+<div id="right">
+  <div  style="margin-left:100px;">
+    <form name="form" method='post' action="{:U('School/update')}">
+      <div class="xiadanewedweg">
+        <p class="yhxxwemzia_b">学校：</p>
+        <input name='school_name' value="<?php echo $info['campus_name']?>" type="text" class="yonghuminwgdengl" />
+        <input type="text" placeholder="学校名称" class="hidden" name='school_id' value="<?php echo $info['campus_id']?>">
+        <div class="clear"></div>
+      </div>
+
+      <div class="tijiawanigahnegg" style="margin-left:300px;margin-top:20px;">
+        <a href="javascript:form.submit()">提交</a>
+      </div>
+      <div class="clear"></div>
+    </form>
+  </div>
+</div>

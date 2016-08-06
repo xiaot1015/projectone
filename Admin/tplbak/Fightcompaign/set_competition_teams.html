@@ -1,0 +1,135 @@
+
+<div class="breadcrumbs" id="breadcrumbs">
+  <script type="text/javascript">
+    try {
+      ace.settings.check('breadcrumbs', 'fixed')
+    } catch (e) {
+    }
+  </script>
+
+  <!-- <ul class="breadcrumb">
+    <li>
+      <i class="icon-home home-icon"></i>
+      <a href="#">对抗比赛管理</a>
+    </li>
+    <li class="active">团队选手分配</li>
+  </ul> --><!-- .breadcrumb -->
+</div>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      对抗比赛管理
+      <small>
+        <i class="icon-double-angle-right"></i>
+        团队选手分配
+      </small>
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <?php foreach($list as $v):?>
+      <!-- PAGE CONTENT BEGINS -->
+      <form class="form-horizontal" role="form" method="post">
+        <div class="form-group">
+          <label class="col-sm-1  control-label no-padding-right" for="form-field-1"> 对抗靶场 </label>
+          <div class="col-sm-2">
+            <select>
+              <option value=''>请选择</option>
+              <?php foreach($competition as $val):?>
+              <option value="<?php echo $val['resistcomp_id'];?>" <?php if($v['targetvm_id']==$val['resistcomp_id']): ?>selected<?php endif;?> ><?php echo $val['question']?></option>
+              <?php endforeach;?>
+            </select>
+          </div>
+          <label class="col-sm-1  control-label no-padding-right" for="form-field-1"> 团队 </label>
+          <div class="col-sm-2">
+            <select>
+              <option value=''>请选择</option>
+
+              <?php foreach($list_team_array as $key=>$val):?>
+              <option value="<?php echo $key;?>" <?php if($v['team_id']==$key): ?>selected<?php endif;?> ><?php echo $val;?></option>
+              <?php endforeach;?>
+            </select>
+          </div>
+          <label class="col-sm-1  control-label no-padding-right" for="form-field-1"> 攻击选手 </label>
+          <div class="col-sm-2">
+            <select >
+              <?php if(empty($v['attack_members'])):?>
+              <option value=''>请选择</option>
+              <?php else: ?>
+              <option value='<?php echo $list_user_array[$v["attack_members"]];?>'><?php echo $list_user_array[$v["attack_members"]];?></option>
+              <?php endif;?>
+            </select>
+          </div>
+          <label class="col-sm-1  control-label no-padding-right" for="form-field-1"> 防御选手 </label>
+          <div class="col-sm-1">
+            <select>
+              <?php if(empty($v['attack_members'])):?>
+              <option value=''>请选择</option>
+              <?php else: ?>
+              <option value='<?php echo $list_user_array[$v["defense_members"]];?>'><?php echo $list_user_array[$v["defense_members"]];?></option>
+              <?php endif;?>
+            </select>
+          </div>
+
+          <div class="col-sm-1">
+            <button type="button" class="btn btn-warning btn-sm" onclick="confirm('确定删除吗','{:U('fightcompaign/set_competition_teams')}?id=<?php echo $v['id'];?>&&cp_id=<?php echo $v['id'];?>')">
+              删除
+            </button>
+          </div>
+        </div>
+      </form>
+      <!-- PAGE CONTENT ENDS -->
+      <?php endforeach;?>
+      <!-- PAGE CONTENT BEGINS -->
+      <form class="form-horizontal" role="form" method="post">
+        <div class="form-group">
+          <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 对抗靶场 </label>
+          <div class="col-sm-2">
+            <select name="target" id='target' required>
+              <option value=''>请选择</option>
+              <?php foreach($competition as $val):?>
+              <option value="<?php echo $val['resistcomp_id'];?>"><?php echo $val['question']?></option>
+              <?php endforeach;?>
+            </select>
+          </div>
+          <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 团队 </label>
+          <div class="col-sm-2">
+            <select name="team" id='team'  url="{:U('Group/ajax_get_user_list')}" required>
+              <option value=''>请选择</option>
+
+              <?php foreach($list_team_array as $key=>$val):?>
+              <option value="<?php echo $key;?>"  ><?php echo $val;?></option>
+              <?php endforeach;?>
+            </select>
+          </div>
+          <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 攻击选手 </label>
+          <div class="col-sm-1">
+            <select name="attack_members" id='attack_members' >
+              <option value=''>请选择</option>
+            </select>
+          </div>
+          <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 防御选手 </label>
+          <div class="col-sm-1">
+            <select name="affense_members" id='affense_members' >
+              <option value=''>请选择</option>
+            </select>
+          </div>
+          <div class="col-sm-1">
+            <button type="submit" class="btn btn-info btn-sm">
+              添加
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="clearfix form-actions">
+        <div class="col-md-offset-5 col-md-5">
+          <button type='button' class='btn btn-info btn-sm' onclick="window.location.href='{:U('index')}'">
+            完成
+          </button>
+        </div>
+      </div>
+    </div><!-- /.col -->
+  </div>
+</div><!-- /.page-content -->

@@ -1,0 +1,50 @@
+<div id="right">
+    <div id="search1">
+        <form action="{:U('user/school/index')}" method='post'>
+            <label>学校名称</label>
+            <input id="form-field-select-school_name"  type="text" name="school_name" placeholder="学校名称">
+            <button  style="position:relative; left:40px;"  type="submit">搜索</button>
+        </form>
+    </div>
+    <div class="tijiawanigahnegg">
+        <a href="{:U('user/school/add')}"><h2>新建</h2></a>
+        <a href="#" onclick="delete_school()"><h2>删除</h2></a>
+    </div>
+    <table>
+        <tr>
+            <td></td>
+            <td>学校名称</td>
+            <td>操作</td>
+        </tr>
+        <?php foreach($list as $v):?>
+        <tr>
+            <td><input type="checkbox" id='<?php echo $v["campus_id"]?>' name="list_check"></td>
+            <td><?php echo $v["campus_name"]?></td>
+            <td>
+                <a href="{:U('school/update')}?school_id=<?php echo $v['campus_id'];?>">修改</a>&nbsp;&nbsp;
+                <a href='javascript:doconfirm("确定删除吗","__APP__/school/delete?school_ids=<?php echo $v["campus_id"];?>");'>删除</a>
+            </td>
+        </tr>
+        <?php endforeach;?>
+    </table>
+</div>
+</div>
+<div id="footerright">
+    <ul class="pagination">
+        <?php if($page!=1):?>
+        <li>
+            <a href="{:U('user/school/index')}?page=<?php echo $page-1;?>" >上一页</a>
+        </li>
+        <?php endif;?>
+        <?php for($i=1;$i<=$num_page;$i++):?>
+        <li <?php if($i==$page):?>class="active"<?php endif;?>>
+            <a href="{:U('user/school/index')}?page=<?php echo $i;?>"><?php echo $i;?></a>
+        </li>
+        <?php endfor;?>
+        <?php if($page!=$num_page):?>
+        <li>
+            <a href="{:U('user/school/index')}?page=<?php echo $i+1;?>">下一页</a>
+        </li>
+        <?php endif;?>
+    </ul>
+</div>

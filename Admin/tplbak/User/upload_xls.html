@@ -1,0 +1,117 @@
+<div class="breadcrumbs" id="breadcrumbs">
+  <script type="text/javascript">
+    try {
+      ace.settings.check('breadcrumbs', 'fixed')
+    } catch (e) {
+    }
+  </script>
+
+  <!-- <ul class="breadcrumb">
+    <li>
+      <i class="icon-home home-icon"></i>
+      <a href="{:U('User/index')}">用户管理</a>
+    </li>
+    <li class="active">批量添加</li>
+  </ul> --><!-- .breadcrumb -->
+</div>
+
+<div class="page-content">
+  <div class="page-header">
+    <h1>
+      用户管理
+      <small>
+        <i class="icon-double-angle-right"></i>
+        批量添加
+      </small>
+    </h1>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+      <form class="form-horizontal" role="form" action="{:U('User/upload_xls')}" method='post' id='add_user_form' enctype='multipart/form-data'>
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 学    校 </label>
+          <div class="col-sm-4">
+            <select class="form-control" id="school" name='school' onchange="$('#school_name').val($('#school option:selected').text());">
+              <option value=''>请选择</option>
+              <?php foreach ($School_list as $val):?>
+              <option value="<?php echo $val['campus_id']?>" <?php if($userinfo['campus_id']==$val['campus_id']):?> selected <?php endif;?>><?php echo $val['campus_name']?></option>
+              <?php endforeach;?>
+            </select>
+            <input type="text" class="hidden" value="<?php echo $val['campus_name'];?>" name="school_name" id="school_name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 学    院 </label>
+          <div class="col-sm-4">
+            <select class="form-control" id="academy" name='academy' onchange="$('#academy_name').val($('#academy option:selected').text());">
+              <option value=''>请选择</option>
+              <?php foreach ($Academy_list as $val):?>
+              <option value="<?php echo $val['academy_id']?>" <?php if($userinfo['academy_id']==$val['academy_id']):?> selected <?php endif;?>><?php echo $val['academy_name']?></option>
+              <?php endforeach;?>
+            </select>
+            <input type="text" class="hidden" value="<?php echo $val['academy_name']?>" name="academy_name" id="academy_name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 专    业</label>
+
+          <div class="col-sm-4">
+            <select class="form-control" id="major" name='major' onchange="$('#major_name').val($('#major option:selected').text());">
+              <?php foreach ($Major_list as $val):?>
+              <option value="<?php echo $val['major_id']?>" <?php if($userinfo['major_id']==$val['major_id']):?> selected <?php endif;?>><?php echo $val['major_name']?></option>
+              <?php endforeach;?>
+            </select>
+            <input type="text" class="hidden" value="<?php echo $val['major_name']?>" name="major_name" id="major_name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 年    级 </label>
+
+          <div class="col-sm-4">
+            <select class="form-control" id="grade" name='grade' onchange="$('#grade_name').val($('#grade option:selected').text());">
+              <option value=''>请选择</option>
+              <?php foreach ($grade_list as $val):?>
+              <option value="<?php echo $val['grade_id']?>" <?php if($userinfo['grade_id']==$val['grade_id']):?> selected <?php endif;?>><?php echo $val['grade_name']?></option>
+              <?php endforeach;?>
+            </select>
+            <input type="text" class="hidden" value="<?php echo $val['grade_name']?>" name="grade_name" id="grade_name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 班    级 </label>
+          <div class="col-sm-4">
+            <select class="form-control" id="class" name='class' onchange="$('#class_name').val($('#class option:selected').text());">
+              <?php foreach ($class_list as $val):?>
+              <option value="<?php echo $val['class_id']?>" <?php if($userinfo['class_id']==$val['class_id']):?> selected <?php endif;?>><?php echo $val['class_name']?></option>
+              <?php endforeach;?>
+
+            </select>
+            <input type="text" class="hidden" value="<?php echo $val['class_name']?>" name="class_name" id="class_name"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 上传xls文件 </label>
+
+          <div class="col-sm-5">
+            <input type="file" id="xls" placeholder="xls" class="col-xs-10 col-sm-5" name="xls">
+          </div>
+          <div class="col-sm-2">
+            <a href="__PUBLIC__/admin/demo/user.xls">下载模板文件</a>
+          </div>
+        </div>
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-3 col-md-9">
+            <button class="btn btn-info" type="submit">
+              <i class="icon-ok bigger-110"></i>
+              提交
+            </button>
+          </div>
+        </div>
+
+      </form>
+      <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+  </div>
+</div><!-- /.page-content -->

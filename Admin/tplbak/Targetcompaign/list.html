@@ -1,0 +1,145 @@
+<div class="breadcrumbs" id="breadcrumbs">
+  <script type="text/javascript">
+    try {
+      ace.settings.check('breadcrumbs', 'fixed')
+    } catch (e) {
+    }
+  </script>
+
+  <!-- <ul class="breadcrumb">
+    <li>
+      <i class="icon-home home-icon"></i>
+      <a href="#">靶场比赛管理</a>
+    </li>
+    <li class="active">列表</li>
+  </ul> --><!-- .breadcrumb -->
+</div>
+
+<div class="page-content">
+  <div class="page-header">
+    <div class="col-sm-12">
+      <div class="widget-box">
+        <div class="widget-header">
+          <h4>按条件搜索</h4>
+        </div>
+
+        <div class="widget-body">
+          <div class="widget-main">
+            <form class="form-inline" name="" action="{:U('Targetcompaign/getlist')}" method="post">
+              <label>比赛名称</label>
+              <input type="text" name="cname" class="input-small" placeholder="比赛名称" value="{$cname}">
+              <button type="submit" class="btn btn-info btn-sm">
+                <i class="icon-key bigger-110"></i> 搜索
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-6"></div>
+
+    </div>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+        	<ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
+              <li class="li-new-mail pull-left">
+                <a  href="{:U('Targetcompaign/add')}" class="btn-new-mail">
+                  <span class="btn bt1n-small btn-purple no-border">
+                    <i class=" icon-envelope bigger-130"></i>
+                    <span class="bigger">新建比赛</span>
+                  </span>
+                </a>
+              </li><!-- ./li-new-mail -->
+              <li class="li-new-mail pull-left">
+                <a  href="{:U('Targetcompaign/target_admin')}" class="btn-new-mail">
+                  <span class="btn bt1n-small btn-purple no-border">
+                    <i class=" icon-envelope bigger-130"></i>
+                    <span class="bigger">靶机管理</span>
+                  </span>
+                </a>
+              </li><!-- ./li-new-mail -->
+            </ul>
+            
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+                  <th class="center">
+                    <label>
+                      <input type="checkbox" class="ace">
+                      <span class="lbl"></span>
+                    </label>
+                  </th>
+                  <th>ID</th>
+                  <th>比赛名称</th>
+                  <th>题量</th>
+                  <th>比赛时间</th>
+                  <th>参数人数</th>
+                  <th>比赛管理</th>
+                  <th>靶机管理</th>
+                  <th>成绩管理</th>
+                </tr>
+              </thead>
+              <tbody>
+              <foreach name="list" item="info" >
+                <tr>
+                  <td class="center">
+                    <label>
+                      <input type="checkbox" class="ace" data-id="{$info.single_id}">
+                      <span class="lbl"></span>
+                    </label>
+                  </td>
+                  <td>{$info.competition_id}</td>
+                  <td>{$info.competition_name}</td>
+                  <td><a href="{:U('Targetcompaign/showquestions',array('id'=>$info['competition_id']))}">{$info.question_num}题</a></td>
+                  <td>{$info.starttime} 至  {$info.endtime}</td>
+                  <td><a href="{:U('Targetcompaign/showmember',array('id'=>$info['competition_id']))}">{$info.member_num}人</a></td>
+                  <td> 
+                  	<a class="btn btn-xs btn-info" href="../Targetcompaign/add?id={$info.competition_id}">修改</a>
+                    <button class="btn btn-xs btn-danger" onclick="del({$info.competition_id})")>删除</button>
+                 </td>
+                  <td class="hidden-480">
+                    <a class="btn btn-xs btn-info" href="../Targetcompaign/targetlist?id={$info.competition_id}">管理</a>
+                  </td>
+                  <td class="hidden-480">
+                    <a class="btn btn-xs btn-info" href="../Targetcompaign/export?id={$info.competition_id}">导出</a>
+                  </td>
+                </tr>
+                </foreach>
+                <tr><td align="right" colspan="9">{$page}</td></tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    
+    <!-- PAGE CONTENT ENDS -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+</div>
+<script type="text/javascript">
+function del(id){
+    var tmp = window.confirm("温馨提示：删除该条数据前，请先点击该行后面的 ‘管理’ 按钮来始化虚拟机，以便删除对应的虚拟机。如果您已经初始化过，请点击确定。");
+    if(tmp === false) return false;
+  if(id == "") return alert("ID ERROR");
+	//var tmp = window.confirm("确定要执行该操作吗？");
+	//if (tmp === true){
+		var url = "{:U('Targetcompaign/delete')}";
+		$.post(url,{id:id},function(data){
+			if(data.status == 1){
+				alert(data.info);
+				window.location.reload();
+			}else{
+				alert(data.info);
+				return false;
+			}
+		});
+	//}
+}
+</script>

@@ -1,0 +1,55 @@
+<div id="right">
+  <div id="search1">
+    <form method='post'>
+      <label>团队名称</label>
+      <input type='text' name='search' value='1' class="hidden">
+      <input id="form-field-select-user_name"  type="text" placeholder="团队名称" name='group' id='group'>
+      <button  style="position:relative; left:40px;"  type="submit">搜索</button>
+    </form>
+  </div>
+  <div class="tijiawanigahnegg">
+    <a href="{:U('user/group/add')}"><h2>新建</h2></a>
+    <a href="javascript:delete_by_ids('{:U('Group/delete')}')"><h2>删除</h2></a>
+  </div>
+  <table>
+    <tr>
+      <td></td>
+      <td>团队名称</td>
+      <td>团队人员</td>
+      <td>操作</td>
+    </tr>
+    <?php foreach($list as $val):?>
+    <tr>
+      <td><input type="checkbox" id="<?php echo $val['team_id'];?>" name="list_check"></td>
+      <td><?php echo $val['team_name'];?></td>
+      <td>                        <?php
+        foreach($val['member_list'] as $v):
+        echo $v."&nbsp;";
+        endforeach;
+        ?></td>
+      <td><a href="{:U('Group/update')}?group=<?php echo $val['team_id']?>">修改</a>&nbsp;&nbsp;
+          <a href="javascript:doconfirm('确定删除吗','{:U('Group/delete')}?ids=<?php echo $val["team_id"];?>')">删除</a></td>
+    </tr>
+    <?php endforeach;?>
+  </table>
+</div>
+</div>
+<div id="footerright">
+  <ul>
+    <?php if($page!=1):?>
+    <li>
+      <a href="{:U('user/group/index')}?page=<?php echo $page-1;?>" >上一页</a>
+    </li>
+    <?php endif;?>
+    <?php for($i=1;$i<=$num_page;$i++):?>
+    <li <?php if($i==$page):?>class="active"<?php endif;?>>
+      <a href="{:U('user/group/index')}?page=<?php echo $i;?>"><?php echo $i;?></a>
+    </li>
+    <?php endfor;?>
+    <?php if($page!=$num_page):?>
+    <li>
+      <a href="{:U('user/group/index')}?page=<?php echo $page+1;?>">下一页</a>
+    </li>
+    <?php endif;?>
+  </ul>
+</div>

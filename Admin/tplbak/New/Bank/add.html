@@ -1,0 +1,69 @@
+<form name="form" method="post" action="">
+  <div style="height:250px;overflow: scroll;  overflow-y:auto;  overflow-x:hidden;  position: relative;">
+  
+      <div class="xiadanewedweg" id="fenlei" style="margin-top:100px;">
+          <p class="yhxxwemzia_b">分类：</p>
+          <select name="parentid" id="parentid" class="xialailewge">
+              <option value=''>--请选择--</option>
+              <option value='0' <?php if($info['parent_id'] === 0){?>selected<?php } ?> >根节点</option>
+            <foreach name="rlist" item="vl" key="k">
+              <if condition="$vl.type_id eq $info['parent_id']">
+                <option value="{$vl.type_id}" selected>{$vl.type_name}</option>
+              <else />
+                <option value="{$vl.type_id}">{$vl.type_name}</option>
+              </if>
+            </foreach>
+              
+          </select>
+          <div class="clear"></div>
+      </div>
+      <div class="xiadanewedweg">
+          <p class="yhxxwemzia_b">名称：</p>
+          <input name="typename" type="text" id="typename" class="yonghuminwgdengl" value="{$info['type_name']}" />
+          <div class="clear"></div>
+      </div>
+
+      <input type="hidden" id="id"  name="id" value="{$info.type_id}"/>
+      <input type="hidden" id="type" name="type" value="{$type}">
+      </div>          
+      <div class="tijiawanigahnegg" style="margin-left:600px;">
+          <a href="javascript:sub();">提交</a>
+      </div>
+      <div class="clear"></div>
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $("input[type='radio']").bind("click",function(){
+        $("input[type='radio']").prop("checked",false);
+        $(this).prop("checked",true);
+        if($(this).val() == 1){
+          $("#fenlei").show();
+        }else{
+          $("#fenlei").hide();
+        }
+    });
+});
+function sub(){
+	var parentid = $("#parentid").val();
+	var typename = $("#typename").val();
+	var type = $("#type").val();
+	var id = $("#id").val();
+    if(parentid == ''){
+        return alert("请选择父节点");
+    }
+    if($.trim(typename) == ''){
+        alert("您还未填写分类");
+        return false;
+    }
+	var url = "{:U('/Bank/edit')}";
+	$.post(url,{parentid:parentid,type:type,typename:typename,type:type,id:id},function(data){
+		if(data.status == '1'){
+			alert(data.info);
+			window.location.href="{:U('/Bank/getlist')}";
+		}else{
+			alert(data.info);
+		}
+	});
+}
+</script>

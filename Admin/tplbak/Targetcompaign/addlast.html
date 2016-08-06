@@ -1,0 +1,123 @@
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/uediter/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/uediter/ueditor.all.min.js"></script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/uediter/lang/zh-cn/zh-cn.js"></script>
+<script src="__PUBLIC__/ace/assets/js/jquery-1.10.2.min.js"></script>
+<div class="breadcrumbs" id="breadcrumbs">
+  <script type="text/javascript">
+    try {
+      ace.settings.check('breadcrumbs', 'fixed')
+    } catch (e) {
+    }
+    var ue = UE.getEditor('editor',{
+                toolbars: [
+                    ['fullscreen', 'source', 'undo', 'redo', 'bold','italic','selectall','removeformat','unlink','cleardoc','fontfamily','fontsize','forecolor',]
+                ],
+                autoHeightEnabled: false,
+                autoFloatEnabled: true
+            });
+    function sub(){
+        var ue = UE.getEditor('editor');
+        if(ue.hasContents()){
+            //$("#desc").val(ue.getContent()); 
+         }else{
+            alert("公告不能为空");
+            return false;
+         }
+       
+    }
+  </script>
+<style>
+
+.page-header1 h1 span{background-color:red;width:120px;float:left;postion:absolute;}
+.wordChecked{
+	background: #D4EFFF;
+}
+#selectedList em{
+	font-style: normal;
+	cursor: pointer;
+	margin-left: 9px;
+}
+#selectedList em:hover{
+	background: #D4EFFF;
+}
+.lilist{
+	line-height:25px;
+}
+</style>
+  <!-- <ul class="breadcrumb">
+    <li>
+      <i class="icon-home home-icon"></i>
+      <a href="#">靶场比赛管理</a>
+    </li>
+    <li class="active">添加</li>
+  </ul> --><!-- .breadcrumb -->
+</div>
+  
+<div class="page-content">
+
+  <div class="page-header">
+    <h1>
+    <span data-id="1">
+       1, 基本信息
+    </span>
+    <span data-id="2">
+        <i class="icon-double-angle-right"></i>2, 选择人员
+    </span>
+    <span data-id="3">
+        <i class="icon-double-angle-right"></i>3, 选择试题
+      </span>
+      <span data-id="4">
+        <i class="icon-double-angle-right"></i>4, 发布
+      </span>
+    </h1>
+  </div><!-- /.page-header -->
+  <br/>
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+      <form class="form-horizontal" role="form" action="../Targetcompaign/edit" method="post" onsubmit="return sub();">
+     
+        <div class="form-group">
+			<table id="selectedList" style="max-height:500px;width:70%;overflow-y:auto;margin-left:16%;" border="1px">
+				<tr>
+					<td>比赛名称</td>
+					<td>题量</td>
+					<td>比赛时间</td>
+					<td>参赛人数</td>
+				</tr>
+				<tr style="text-align:center;">
+					<td class="qtitle" >{$info.competition_name}</td>
+					<td style="width:80px">{$info.question_num}题</td>
+					<td >{$info.starttime} 至 {$info.endtime}</td>
+					<td style="width:100px">{$info.member_num}人</td>
+				</tr>
+			</table>       
+        </div>
+        <div class="form-group">
+			<label class="col-sm-3 control-label no-padding-right" for="form-field-1">大赛公告: </label>
+          <div class="col-sm-9">
+          <script id="editor" name="desc" type="text/plain" style="margin-left:0px;">
+          {$info['competition_note']}
+          </script>
+          </div>     
+        </div>
+        
+        <input type="hidden" id="id"  name="id" value="{$id}"/>
+        <input type="hidden" id="type" name="type" value="{$type}"/>
+        <input type="hidden" id="step" name="step" value="{$step}"/>
+        <div class="clearfix form-actions">
+          <div class="col-md-offset-3 col-md-9">
+            <button class="btn btn-info" type="submit">
+              <i class="icon-ok bigger-110"></i> 下一步
+            </button>
+          </div>
+        </div>
+        
+      </form>
+      <!-- PAGE CONTENT ENDS -->
+    </div><!-- /.col -->
+  </div>
+</div><!-- /.page-content -->
+

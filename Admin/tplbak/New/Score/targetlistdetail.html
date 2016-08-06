@@ -1,0 +1,187 @@
+<script src="__PUBLIC__/ace/assets/js/jquery-1.10.2.min.js"></script>
+  <div id="main">
+    <a href="{:U('Score/getlist')}" style="margin-left:50px;font-size:14px;color:#00aeff;">返回列表</a>
+    <table id="achievement">
+      <tr id="firstLine">
+        <td>展开</td>
+        <td>姓名</td>
+        <td>正确</td>
+        <td>错误</td>
+        <td>未完成</td>
+      </tr>
+     <foreach name="list" item="info" key="k" >
+        <tr data-id="{$info.score_id}">
+          <td>{$k+1}</td>
+          <td>{$info.user_name}</td>
+          <td>{$info.right_num}</td>
+          <td>{$info.wrong_num}</td>
+          <td>{$info.nodo_num}</td>
+        </tr>
+      </foreach>
+    </table>
+  </div>
+  <!-- <div id="footer">
+    <ul>
+      <li><a href="">上一页</a></li>
+      <li><a href="">1</a></li>
+      <li><a href="">2</a></li>
+      <li><a href="">3</a></li>
+      <li><a href="">4</a></li>
+      <li><a href="">5</a></li>
+      <li><a href="">……</a></li>
+      <li><a href="">27</a></li>
+      <li><a href="">下一页</a></li>
+    </ul>
+  </div> -->
+  <table id="score" style="min-width:300px;max-width:1399px;">
+    <tr id="idx">
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr id="pics">
+      <td><img src="__PUBLIC__/admin/images/right.png"></td>
+      <td><img src="__PUBLIC__/admin/images/none.png"></td>
+      <td><img src="__PUBLIC__/admin/images/wrong.png"></td>
+    </tr>
+  </table>
+  <div id="explain">
+    本题考核的是：。。。。。。。，该漏洞于2011年发现，带来什么什么样的影响，。。。。。。。。。。
+  </div>
+ </body>
+  <script type="text/javascript">
+  document.onmousemove = mouseMove; 
+  var aaaa = 0;
+  var bbbb = 0;
+  var oAchievement = document.getElementById("achievement");
+  var atr = oAchievement.getElementsByTagName("tr");
+  var oScore = document.getElementById("score");
+  var aImg = oScore.getElementsByTagName('img');
+  var oExplain = document.getElementById("explain");
+  
+  function show_idx_pic(){
+    $("#score").css("top",aaaa+'px');
+    $("#score").css("left",bbbb+'px');
+    $("#score").show();
+    $("#explain").hide();
+  }
+  function show_explain(){
+    //$("#score").css("top",aaaa+'px');
+    //$("#score").css("left",bbbb+'px');
+    //$("#score").show();
+    // $("#explain").css("left",bbbb+'px');
+    $("#explain").css("top",aaaa+15+'px');
+    $("#explain").show();
+  }
+  
+  var cloneItem_idx = $('<td></td>');
+  var cloneItem_pic = $('<td><img src="__PUBLIC__/admin/images/none.png" data-v=""></td>');
+  $("#achievement").on("click","tr",function(){
+    $("#pics").empty();
+    $("#idx").empty();
+    var id = $(this).attr("data-id");
+    var url = "{:U('Score/gettargetscoredetailbyid')}";
+    $.post(url,{id:id},function(data){
+
+      if(data.data != null && data.status == 1 && data.data.length>0){    // 返回有数据 
+        var tmps_idx = [],tmps_pic = [];
+        tmps_idx.push(cloneItem_idx.clone().text("关卡(ID)"));
+        tmps_pic.push(cloneItem_pic.clone().text("状态"));
+        $.each(data.data,function(idx,obj){
+          var tmpstr = '';
+          switch(obj.status){case "0":tmpstr="__PUBLIC__/admin/images/none.png";break;case "1":tmpstr="__PUBLIC__/admin/images/right.png";break;case "2":tmpstr="__PUBLIC__/admin/images/wrong.png";break;}
+          var pic_item =cloneItem_pic.clone();
+          pic_item.find("img").attr("src",tmpstr).parent().find("img").attr("data-v",obj.question_desc);
+          //tmps_idx.push(cloneItem_idx.clone().text(idx+1));
+          tmps_idx.push(cloneItem_idx.clone().text((idx+1)+"("+obj.question_id+")"));
+          tmps_pic.push(pic_item);
+        });
+        $("#idx").append(tmps_idx);
+        $("#pics").append(tmps_pic);
+      }else{
+        //$("#scorede").html('<tr><td>暂无数据</td></tr>');
+      }
+      show_idx_pic();
+    });
+  });
+  $("#pics").on("click","td",function(){
+    var desc = '题目背景：';
+    desc += $(this).find("img").attr("data-v");
+    $("#explain").text(desc);
+    show_explain();
+  })
+
+  function mousePosition(ev){
+    if(ev.pageX || ev.pageY){
+      return {x:ev.pageX, y:ev.pageY};
+    }
+    return {
+      x:ev.clientX + document.body.scrollLeft - document.body.clientLeft,
+      y:ev.clientY + document.body.scrollTop - document.body.clientTop
+    };
+  }
+  function mouseMove(ev){
+    ev = ev || window.event;
+    var mousePos = mousePosition(ev);
+    var oScore = document.getElementById("score");
+     aaaa= mousePos.y;
+     bbbb= mousePos.x;
+  }
+
+</script>
+
+
+<script type="text/javascript">
+/*
+var cloneItem = $('<tr><td></td><td class="isok"></td><td></td></tr>');
+var tabtitle = $('<tr style="background-color:#F3F0F4;"><td>序号</td><td>回答状态</td><td>背景</td></tr>');
+$("#achievement").on("click","tr",function(){
+	$("#scorede").empty();
+	var id = $(this).attr("data-id");
+	var url = "{:U('Score/gettargetscoredetailbyid')}";
+	$.post(url,{id:id},function(data){
+
+		if(data.data != null && data.status == 1 && data.data.length>0){		// 返回有数据 
+			var tmps = [];
+			tmps.push(tabtitle);
+			$.each(data.data,function(idx,obj){
+				var tmpstr = '';
+				switch(obj.status){case "0":tmpstr="未完成";break;case "1":tmpstr="做对";break;case "2":tmpstr="做错";break;}
+				var k_cloneitem = cloneItem.clone();
+				k_cloneitem.find("td").first().text(obj.question_id);
+				k_cloneitem.find("td").next(".isok").text(tmpstr).next().text(obj.question_desc);
+				tmps.push(k_cloneitem);
+			});
+			$("#scorede").append(tmps);
+		}else{
+			$("#scorede").html('<tr><td>暂无数据</td></tr>');
+		}
+		showmark();
+		$("#keyworddiv").show();
+	});
+});
+//显示遮罩层
+function showmark() {
+        var bw = $(document).width();
+        var bh = $(document).height();
+        var e = $('<div></div>');
+        e.css('background', '#000');
+        e.css('width', bw + 'px');
+        e.css('height', bh + 'px');
+        e.css('position', 'absolute');
+        e.css('left', '0');
+        e.css('top', '0');
+        e.css('-khtml-opacity', '0.5');
+        e.css('-moz-opacity', '0.5');
+        e.css('opacity', '0.5');
+        e.css('filter', 'alpha(opacity=50)');
+        e.css('zIndex', '1001');
+        e.attr('id', 'masker');
+        $(document.body).append(e);
+}
+    //关闭遮罩层
+function winclose() {
+		$("#keyworddiv").hide();
+        $('#masker').remove();
+}*/
+</script>

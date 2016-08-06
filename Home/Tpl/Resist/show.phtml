@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php require_once APP_PATH . "/Tpl/header.phtml"; ?>
+    </head>
+    <body>
+        <div class="box">
+            <?php require_once APP_PATH . "/Tpl/top.phtml"; ?>
+            <div class="jingsaipeiming">
+                <div class="jingsaipeiminga"><a href='<?php echo U('resist/index'); ?>'>红蓝对抗</a>><?php echo $resist['competition_name']; ?></div>
+                <div class="jingsaipeimingb">
+                    <ul>
+                        <li><a href="<?php echo U('resist/info', array('id' => $resist['competition_id'])); ?>">大赛公告</a></li>
+                        <li><a href="<?php echo U('resist/score', array('tid' => $resist['competition_id'])); ?>">查看排名</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="lafanghongafang">
+                <div class="lafanghongafanga">
+                    <p class="peimingbgabs_b">红队任务</p>
+                    <div class="biaogeimwegeef">
+                        <ul>
+                            <li>
+                                <?php echo htmlspecialchars_decode($resist['task_red']); ?>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="honmgfanganiug">
+                        <a href="__APP__/resist/renter/tid/<?php echo $resist['competition_id']; ?>" style=" color:#F00">红方入口</a>
+                    </div>
+                </div>
+                <div class="lafanghongafangb">
+                    <p class="peimingbgabs_b">蓝队任务</p>
+                    <div class="biaogeimwegeef">
+                        <ul>
+                            <li><?php echo htmlspecialchars_decode($resist['task_blue']); ?></li>
+                        </ul>
+                    </div>
+                    <div class="honmgfanganiug">
+                        <a href="__APP__/resist/benter/tid/<?php echo $resist['competition_id']; ?>" style=" color:#00aeff">蓝方入口</a>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </body>
+</html>

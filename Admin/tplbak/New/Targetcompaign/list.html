@@ -1,0 +1,78 @@
+<script src="__PUBLIC__/ace/assets/js/jquery-1.10.2.min.js"></script>
+<div id="right">
+<div id="search">
+        <form action="{:U('Targetcompaign/getlist')}" method="post">
+          比赛名称：<input type="text" id="text" name="cname" value="{$cname}">
+          <img src="__PUBLIC__/admin/images/search.png">
+          <button type="submit">搜索</button>
+        </form> 
+      </div>
+      <div id="new" class="tijiawanigahnegg">
+        <a href="{:U('Targetcompaign/add')}"><h2>新建</h2></a>
+      </div>
+      <table>
+        <tr>
+          <td></td>
+          <td>ID</td>
+          <td>比赛名称</td>
+          <td>题量</td>
+          <td>比赛时间</td>
+          <td>参数人数</td>
+          <td>比赛管理</td>
+          <td>靶机管理</td>
+          <td>成绩管理</td>
+        </tr>
+        <foreach name="list" item="info" >
+        <tr>
+          <td class="center">
+            <label>
+              <input type="checkbox" class="ace" data-id="{$info.single_id}">
+              <span class="lbl"></span>
+            </label>
+          </td>
+          <td>{$info.competition_id}</td>
+          <td>{$info.competition_name}</td>
+          <td><a href="{:U('Targetcompaign/showquestions',array('id'=>$info['competition_id']))}">{$info.question_num}题</a></td>
+          <td>{$info.starttime} 至  {$info.endtime}</td>
+          <td><a href="{:U('Targetcompaign/showmember',array('id'=>$info['competition_id']))}">{$info.member_num}人</a></td>
+          <td> 
+            <a href="../Targetcompaign/add?id={$info.competition_id}">修改</a>
+            <a href="javascript:void(0);" onclick="del({$info.competition_id})")>删除</a>
+         </td>
+          <td class="hidden-480">
+            <a  href="../Targetcompaign/targetlist?id={$info.competition_id}">管理</a>
+          </td>
+          <td class="hidden-480">
+            <a  href="{:U('Score/export',array('id'=>$info['competition_id'],'type'=>1))}">导出</a>
+          </td>
+        </tr>
+         </foreach>
+         <tr><td colspan="9">{$page}</td></tr>
+      </table>
+  </div>
+  <div id="footerright">
+    <ul>
+     
+    </ul>
+  </div>
+
+
+<script type="text/javascript">
+function del(id){
+    var tmp = window.confirm("温馨提示：删除该条数据前，请先点击该行后面的 ‘管理’ 按钮来始化虚拟机，以便删除对应的虚拟机。如果您已经初始化过，请点击确定。");
+    if(tmp === false) return false;
+    if(id == ''){
+        return alert("参数错误");
+    }
+    var url = "../Targetcompaign/delete";
+    $.post(url,{id:id},function(data){
+      if(data.status == 1){
+        alert(data.info);
+        window.location.reload();
+      }else{
+        alert(data.info);
+        return false;
+      }
+    });
+}
+</script>

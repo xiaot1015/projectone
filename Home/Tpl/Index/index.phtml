@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php require_once APP_PATH . "/Tpl/header.phtml"; ?>
+    </head>
+    <body>
+        <div class="box">
+            <?php require_once APP_PATH . "/Tpl/top.phtml"; ?>
+            <div class="yonghujiemian"> 
+                <?php if (session('type') == ConstModel::LOGIN_TYPE_USER): ?>
+                    <a href="__APP__/target/index" style=" float:left;">
+                    <?php elseif (session('type') == ConstModel::LOGIN_TYPE_TEAM): ?>
+                        <a href="javascript:alert('请使用个人账户登录');" style=" float:left;">
+                        <?php endif; ?>
+                        <div class="yonghujiemiana">
+                            <p style=" text-align:center; padding-top:50px;">
+                                <img src="__PUBLIC__/home/images/bazi.png" width="267" height="267" />
+                            </p>
+                            <p class="bachanbiaotimg">靶场实战</p>
+                            <div class="bachangwzshizhang">
+                                <p>
+                                    靶场实战：<?php echo $sys['rangeinfo'] ?>
+                                </p>
+
+                            </div>
+                        </div>
+                    </a> 
+                    <?php if (session('type') == ConstModel::LOGIN_TYPE_USER): ?>
+                        <a href="javascript:alert('请使用团队账户登录');" style=" float:right;">
+                        <?php elseif (session('type') == ConstModel::LOGIN_TYPE_TEAM): ?>
+                            <a href="__APP__/resist/index" style=" float:right;">
+                            <?php endif; ?>
+                            <div class="yonghujiemiana">
+                                <p style=" text-align:center; padding-top:30px;">
+                                    <img src="__PUBLIC__/home/images/dikaweg.png" width="535" height="282" />
+                                </p>
+                                <p class="bachanbiaotimg">红蓝对抗</p>
+                                <div class="bachangwzshizhang">
+                                    <p>红蓝对抗：<?php echo $sys['combatinfo'] ?></p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="clear"></div>
+                        </div>
+                        </div>
+                        </body>
+                        </html>

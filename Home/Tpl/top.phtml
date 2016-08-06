@@ -1,0 +1,18 @@
+<div class="top">
+    <div class="logo">
+        <p class="logoa">
+            <img src="__PUBLIC__/home/images/logo.png" width="142" height="50" />
+        </p>
+        <p class="logob"><?php echo session('title'); ?></p>
+    </div>
+    <div class="loginm">
+        <?php if (session('type') == ConstModel::LOGIN_TYPE_USER): ?>
+            个人：<a href="__APP__/user/index" target="blank"><?php echo session('name'); ?></a>
+        <?php elseif (session('type') == ConstModel::LOGIN_TYPE_TEAM): ?>
+            团队：<a  target="blank"><?php echo session('name'); ?></a>
+        <?php endif; ?>
+        |
+        <a href="__APP__/login/out">退出</a>
+    </div>
+    <div class="clear"></div>
+</div>

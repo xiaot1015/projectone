@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php require_once APP_PATH . "/Tpl/header.phtml"; ?>
+    </head>
+    <body style="background:url(images/yansedjiogeg.png) center top repeat-y;" style="height:1600px;">
+        <div class="wuxianshegns" style="min-height:1024px;">
+            <div class="box">
+                <?php require_once APP_PATH . "/Tpl/top.phtml"; ?>
+                <div class="jingsaipeiming" style=" margin-top:0px;">
+                    <div class="jingsaipeiminga">靶场实战</div>
+                    <div class="clear"></div>
+                </div>
+                <div class="shizhanbga" style=" margin-top:0px;">
+                    <div class="shizhanbg">
+                        <div class="shizhanzuobianf_left">
+                            <?php $i = 1; ?>
+                            <?php foreach ($target_array as $target) : ?>
+                                <?php if ($i % 2 == 0): ?>
+                                    <div class="<?php echo $i == 2 ? 'shizhanbga_left_one' : 'shizhanbga_left' ?>">
+                                        <a title="<?php echo $target['competition_desc']; ?>" href="__APP__/target/show/id/<?php echo $target['competition_id'] ?>"> 
+                                            <div class="shizhanbgb_left">
+                                                <p style=" font-size:22px; line-height:32px; color:#FFF;">
+                                                    <?php echo String::msubstr($target['competition_name'], 0, 15); ?>
+                                                </p>
+                                                <p>开始时间<?php echo $target['starttime']; ?> ～ <?php echo $target['endtime']; ?></p>
+                                                <p>详细介绍：<?php echo String::msubstr($target['competition_desc'], 0, 25); ?> </p>
+                                            </div> 
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                                <?php $i++; ?>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="shizhanzuobianf">
+                            <?php $i = 1; ?>
+                            <?php foreach ($target_array as $target) : ?>
+                                <?php if ($i % 2 == 1): ?>
+                                    <div class="<?php echo $i == 1 ? 'shizhanbga_one' : 'shizhanbga' ?>">
+                                        <a title="<?php echo $target['competition_desc']; ?>" href="__APP__/target/show/id/<?php echo $target['competition_id'] ?>"> 
+                                            <div class="shizhanbgb">
+                                                <p style=" font-size:22px; line-height:32px; color:#FFF;">
+                                                    <?php echo String::msubstr($target['competition_name'], 0, 15); ?>
+                                                </p>
+                                                <p>开始时间<?php echo $target['starttime']; ?> ～ <?php echo $target['endtime']; ?></p>
+                                                <p>详细介绍：<?php echo String::msubstr($target['competition_desc'], 0, 25); ?> </p>
+                                            </div> 
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                                <?php $i++; ?>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,110 @@
+<script src="__PUBLIC__/ace/assets/js/jquery-1.10.2.min.js"></script>
+<style type="text/css">
+/* CSS Document */
+body,ul,li{ padding:0; margin:0;}
+ul,li{ list-style:none;}
+.box{ width:100%; margin:0 auto; position:relative; overflow:hidden; _height:100%;}
+.picbox{ width:980px; height:115px; overflow:hidden; position:relative;}
+.piclist{ height:115px;position:absolute; left:0px; top:0px}
+.piclist li{ background:#eee; margin-right:20px; padding:5px; float:left;}
+.piclist li a{ color:#6cf;}
+.piclist li a:hover{ color:#84B263;}
+.piclist li img{ border:none;width:100px;height:100px;}
+.swaplist{ position:absolute; top:0px}
+.og_prev,.og_next{ width:30px; height:50px; background:url(__PUBLIC__/admin/images/icon.png) no-repeat; background:url(__PUBLIC__/admin/images/icon_ie6.png) no-repeat; position:absolute; top:33px; z-index:99; cursor:pointer;filter:alpha(opacity=70); opacity:0.7;}
+.og_prev{ background-position:0 -60px; left:4px;}
+.og_next{ background-position:0 0; right:4px;}
+</style>
+
+<div class="right">
+<form role="form">
+<div style="margin:15px;">
+  <label class="col-sm-3 control-label no-padding-right" for="form-field-1" style="font-weight: bolder;color:#fff;font-size:14px;">靶场实战成绩:</label>
+</div>
+<div style="margin-left:25%;width:650px;height:140px;" id="target">
+	<div class="box" style="width:680px;">
+	<div class="og_prev"></div>
+	<div class="box" style="margin-top:12px;margin-left:25px;width:650px;">
+		<div class="picbox">
+			<ul class="piclist mainlist">
+				<foreach name="targetlist" item="target">
+				<li style="height:100px;"><a href="{:U('Score/gettargetscorelist',array('id'=>$target['competition_id']))}"><img src="__PUBLIC__/admin/images/back.jpg" /><div style="text-align:center;margin-top:-60px;"><span style="max-width:98px;max-height:60px;display:inline-block;color:#181818;font-weight:bold;"><?php $str = (strlen($target['competition_name']) > 20)?iconv_substr($target['competition_name'],0,20,'utf8').'...':$target['competition_name']; echo $str; ?></span></div></a></li>
+				</foreach>
+			</ul>
+	        <ul class="piclist swaplist"></ul>
+		</div>
+	</div>
+	<div class="og_next"></div>
+	</div>
+</div>
+ <div style="margin:15px;">
+  <label class="col-sm-3 control-label no-padding-right" for="form-field-1" style="font-weight: bolder;margin-top:20px;color:#fff;font-size:14px;">红蓝对抗成绩:</label>
+</div>
+<div style="margin-left:25%;width:650px;height:140px;" id="resist">
+	<div class="box" style="width:680px;">
+	<div class="og_prev"></div>
+		<div class="box" style="margin-top:12px;margin-left:25px;width:650px;">
+		<div class="picbox">
+			<ul class="piclist mainlist">
+				<foreach name="resistlist" item="resist">
+				<li style="height:100px;">
+				<a href="{:U('Score/getresistscorelist',array('id'=>$resist['competition_id']))}"><img src="__PUBLIC__/admin/images/back.jpg"/><div style="text-align:center;margin-top:-60px;"><span style="max-width:98px;max-height:60px;display:inline-block;color:#181818;font-weight:bold;"><?php $str = (strlen($resist['competition_name']) > 20)?iconv_substr($resist['competition_name'],0,20,'utf8').'...':$resist['competition_name']; echo $str; ?></span></div></a></li>
+				</foreach>
+			</ul>
+	        <ul class="piclist swaplist"></ul>
+		</div>
+	</div>
+	<div class="og_next"></div>
+	</div>
+</div>
+</form>
+</div>
+<script type="text/javascript">
+$(document).ready(function(e) {
+	var uiwidth = 110;
+	var shownum  = 5;
+	var scrollUlLeft = 0;
+	var prevAllow = true, //为了防止连续点击上一页按钮
+	   nextAllow = true; //为了防止连续点击下一页按钮
+	
+	$('.og_next').click(function(){
+		var obj = $(this).parent();
+		if(nextAllow){
+			obj.find('.mainlist').animate({
+					left : scrollUlLeft - uiwidth},
+			300,function(){
+				nextAllow = false;
+				obj.find('.mainlist').css('left', scrollUlLeft);
+				obj.find('.mainlist li:first').clone().appendTo(obj.find('.mainlist'));
+				obj.find('.mainlist li:first').remove();
+				nextAllow = true;
+			});
+		}
+	})
+	$('.og_prev').click(function(){
+		var obj = $(this).parent();
+		if(prevAllow){
+			prevAllow = false;
+			scrollUlLeft = scrollUlLeft - uiwidth;
+			obj.find('.mainlist').css('left', scrollUlLeft);
+			obj.find('.mainlist li').last().clone().prependTo(obj.find('.mainlist'));
+			obj.find('.mainlist li').last().remove();
+			obj.find('.mainlist').animate({
+					left : scrollUlLeft + uiwidth},
+			300,function(){
+				scrollUlLeft =  parseInt(obj.find('.mainlist').css('left'));
+				prevAllow = true;
+			});
+		}
+	})    
+});
+
+$(document).ready(function(){
+	$('.og_prev,.og_next').hover(function(){
+			$(this).fadeTo('fast',1);
+		},function(){
+			$(this).fadeTo('fast',0.7);
+	})
+	
+})
+</script>

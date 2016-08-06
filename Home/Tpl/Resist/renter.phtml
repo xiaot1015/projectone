@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php require_once APP_PATH . "/Tpl/header.phtml"; ?>
+
+    </head>
+    <body>
+        <div class="box">
+            <?php require_once APP_PATH . "/Tpl/top.phtml"; ?>
+            <div class="jingsaipeiming">
+                <div class="jingsaipeiminga"><a href='<?php echo U('resist/index'); ?>'>红蓝对抗</a>><?php echo $resist['competition_name']; ?></div>
+                <div class="jingsaipeimingb">
+                    <ul>
+                        <li><a href="<?php echo U('resist/info', array('id' => $resist['competition_id'])); ?>">大赛公告</a></li>
+                        <li><a href="<?php echo U('resist/score', array('tid' => $resist['competition_id'])); ?>">查看排名</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="rukoubeijing">
+                <?php foreach ($team_array as $team): ?>
+                    <div class="rukoubeijingb">
+                        <a href="__APP__/resist/exam/cid/<?php echo $resist['competition_id']; ?>/team/<?php echo $team['team_id']; ?>">
+                            <div class="xxerdkiuange">
+                                <p class="xxerdiuiewgfa">
+                                    <img src="__PUBLIC__/home/images/tu_img.png" width="192" height="213" />
+                                </p>
+                                <p class="xxerdiuiewgf"><?php echo $team['team_name']; ?></p>
+                            </div>
+                            <div class="rukougundongtiao">
+                                <p class="rukougundongtiaob"><?php echo $team['score_total']; ?></p>
+                                <div class="gundogntiaoweiwge"></div>
+                                <div class="gundonshuzibeijgg"><?php echo $team['score_total'] - $team['score_lose']; ?></div>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>                
+                <div class="clear"></div>
+                <div class="page">
+                    <?php echo $page; ?>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        scoreProgress(1500);
+    </script>
+    <script>
+        $(function () {
+            reloading();
+        });
+    </script>
+</html>

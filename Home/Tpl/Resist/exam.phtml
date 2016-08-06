@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php require_once APP_PATH . "/Tpl/header.phtml"; ?>
+    </head>
+    <body>
+        <div class="box">
+            <?php require_once APP_PATH . "/Tpl/top.phtml"; ?>
+            <div class="jingsaipeiming">
+                <div class="jingsaipeiminga"><a href='<?php echo U('resist/index'); ?>'>红蓝对抗</a>><?php echo $resist['competition_name']; ?></div>
+                <div class="jingsaipeimingb">
+                    <ul>
+                        <li><a href="<?php echo U('resist/info', array('id' => $resist['competition_id'])); ?>">大赛公告</a></li>
+                        <li><a href="<?php echo U('resist/score', array('tid' => $resist['competition_id'])); ?>">查看排名</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="main_nr">
+                <div class="xxedfregzoniane">
+                    <div class="xxerduimmegwe"><?php echo $team['team_name']; ?>目标机IP:<?php echo $ip; ?></div>
+                    <div class="xxerduimmegweb">
+                        <?php $i = ($p - 1)*6; ?>
+                        <?php foreach ($exam_array as $exam): ?>
+                            <?php $i++; ?>
+                            <form method="POST" id="form<?php echo $exam['de_id'] ?>">
+                                <div class="xxedfregzonianeaweboder">
+                                    <div class="xxedfregzonianeawe">
+                                        <p class="xxedfregzonianeawepa"><?php echo $i; ?></p>
+                                        <p class="xxedfregzonianeawepb"><?php echo $exam['gatename'] ?></p>
+                                        <p class="xxedfregzonianeawepc"><?php echo $exam['score']; ?></p>
+                                        <?php if ($exam['attack'] == ConstModel::RE_DETAIL_STATUS_DE): ?>
+                                            <p id="status<?php echo $exam['de_id']; ?>" class="xxedfregzonianeawepd_b">安全</p>
+                                        <?php elseif ($exam['attack'] == ConstModel::RE_DEATIL_STATUS_AT): ?>
+                                            <p id="status<?php echo $exam['de_id']; ?>" class="xxedfregzonianeawepd">沦陷</p>
+                                        <?php endif; ?>
+                                        <p class="xxeihgeiuegeie"><a href="#">V</a></p>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div id="div<?php echo $exam['de_id']; ?>" class="xxedfregzonianeawe" style="display: none">
+                                        <p class="xxedfregzonianeawepa"></p>
+                                        <div class="youqingtixiang" style="height:80px;">
+                                            <p>本题提示：</p>
+                                            <?php echo htmlspecialchars_decode($exam['de_desc']); ?>
+                                        </div>
+                                        <p class="xxedfregzonianeawepa">KEY</p>
+                                        <input name='resist' value='<?php echo $resist['competition_id']; ?>' type='hidden'/>
+                                        <input name="exam" value="<?php echo $exam['de_id']; ?>" type="hidden"/>
+                                        <input name="team" value="<?php echo $team['team_id']; ?>" type="hidden"/>
+                                        <input name="key" type="text" class="keewequhegg" />
+                                        <input name="verify" type="text" class="keewequheggb" />
+                                        <p class="xxedfregzonianeawepa">
+                                            <img class="verify" id="<?php echo $exam['de_id']; ?>" src="__APP__/const/verify/id/<?php echo $exam['de_id']; ?>" width="73" height="24" />
+                                        </p>
+                                        <p class="aniuimgetu">
+                                            <a href="javascript:sub('form<?php echo $exam['de_id']; ?>');">提交</a>
+                                        </p>
+                                        <div class="clear"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="main_nrrihtr" >
+                    <div class="zhujinegwenz" style="margin-top: 70px;">
+                        <?php if (session('is_range') == 1): ?>
+                            <?php foreach ($vms_array as $vms): ?>
+                                <a href="<?php echo U('target/start', array('id' => $vms['name'])); ?>" target="_blank">
+                                    <dl>
+                                        <dd>
+                                            <img src="__PUBLIC__/home/images/zhuko.png" width="159" height="167" />
+                                        </dd>
+                                        <dt><?php echo $vms['name'] ?></dt>
+                                    </dl>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+
+            </div>
+            <div class="page">
+                <?php echo $page; ?>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function () {
+            $(".xxedfregzonianeawe").has(".xxeihgeiuegeie").each(function () {
+                var nx = $(this).next(".xxedfregzonianeawe");
+                $(this).find(".xxeihgeiuegeie > a").click(function () {
+                    if (nx.find(".xxeihgeiuegeie > a").length == 0) {
+                        nx.is(":hidden") ? nx.show(200) : nx.hide(200);
+                    }
+                    return false;
+                });
+            })
+        });
+        function sub(a) {
+            $.ajax({
+                type: 'POST',
+                url: '__APP__/resist/judge/',
+                data: $('#' + a).serialize(),
+                dataType: 'json',
+                success: function (msg) {
+                    if (msg.status == 1) {
+                        $('#status' + msg.data).attr('class', 'xxedfregzonianeawepd');
+                        $('#status' + msg.data).html('沦陷');
+                        $('#div' + msg.data).hide();
+                    }
+                    alert(msg.info);
+                }
+            });
+        }
+
+        $('.verify').click(function () {
+            $(this).attr('src', '__APP__/const/verify/id/' + $(this).attr('id'));
+        });
+    </script>
+</html>

@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php require_once APP_PATH . "/Tpl/header.phtml"; ?>
+    </head>
+    <body>
+        <div class="box">
+            <?php require_once APP_PATH . "/Tpl/top.phtml"; ?>
+            <div class="jingsaipeiming">
+                <div class="jingsaipeiminga">
+                    <a href='<?php echo U('target/index'); ?>'>靶场实战</a>><?php echo $target['competition_name']; ?>
+                </div>
+                <div class="jingsaipeimingb">
+                    <ul>
+                        <li><a href="<?php echo U('target/info', array('id' => $target['competition_id'])); ?>">大赛公告</a></li>
+                        <li><a href="<?php echo U('target/score', array('tid' => $target['competition_id'])); ?>">查看排名</a></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="main_nr">
+                <div class="main_nrlefeta">
+                    <div class="main_nrlefet">
+                        <div class="tinibiaiwewenziak">
+                            <p class="tinibiaiwewenzi">第<?php echo $now; ?>题  ：<?php echo $exam['question'] ?></p>
+                            <p class="tinibiaiwewenzia"><?php echo $exam['score'] ?>分</p>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="youqingtixiang" >
+                            <p>本题提示：</p>
+                            <?php if ($type == ConstModel::QUEST_TYPE_SINGLE): ?>
+                                <?php echo htmlspecialchars_decode($exam['singlechoice_desc']); ?>
+                            <?php elseif ($type == ConstModel::QUEST_TYPE_MUTI): ?>
+                                <?php echo htmlspecialchars_decode($exam['mulchoice_desc']); ?>
+                            <?php else: ?>
+                                <?php echo htmlspecialchars_decode($exam['targetcomp_desc']); ?>
+                            <?php endif; ?>
+                        </div>
+                        <div class="shuruwzhanghao">
+                            <form id="form" name="form" method="POST" action="__APP__/target/judge">
+                                <?php if ($type == ConstModel::QUEST_TYPE_SINGLE): ?>
+                                    <div class="shuruwzhanghao_b">
+                                        <?php $answer_array = json_decode($exam['answers'], true); ?>
+                                        <?php foreach ($answer_array as $key => $answer): ?>
+                                            <p class="shuruwzhanghaoa" style="width:100%;"><input name="key" type="radio" class="wenbenshuruk" style="width:40px;height: 22px;margin-top: 8px;" value="<?php echo ConstModel::$answer[$key]; ?>" /><?php echo ConstModel::$answer[$key]; ?>：<?php echo $answer; ?> </p>
+                                        <?php endforeach; ?>
+                                        <input name="exam" type="hidden" value="<?php echo $exam['single_id']; ?>"/>
+                                        <input name="score" type="hidden" value="<?php echo $score; ?>"/>
+                                        <input name="type" type="hidden" value="<?php echo $type; ?>"/>
+                                        <input name="dt" type="hidden" value="<?php echo $now; ?>"/>
+                                        <input name="target" type="hidden" value="<?php echo $target['competition_id']; ?>"/>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="shuruwzhanghao_b">
+                                        <p class="shuruwzhanghaoa">验证码  : </p>
+                                        <input name="verify" type="text" class="wenbenshurukb" />
+                                        <p class="shuruwzhanghao_c">
+                                            <img src="__APP__/const/verify/" width="73" height="24" />
+                                        </p>
+                                        <p class="tijiaoanniugmg"><a href="javascript:subm()">提交</a></p>
+                                        <div class="clear"></div>
+                                    </div>
+                                <?php elseif ($type == ConstModel::QUEST_TYPE_MUTI): ?>
+                                    <div class="shuruwzhanghao_b">
+                                        <?php $answer_array = json_decode($exam['answers'], true); ?>
+                                        <?php foreach ($answer_array as $key => $answer): ?>
+                                            <p class="shuruwzhanghaoa" style="width:100%;"><input name="key[]" type="checkbox" class="wenbenshuruk" style="width:40px;height: 22px;margin-top: 8px;" value="<?php echo ConstModel::$answer[$key]; ?>" /><?php echo ConstModel::$answer[$key]; ?>：<?php echo $answer; ?> </p>
+                                        <?php endforeach; ?>
+                                        <input name="exam" type="hidden" value="<?php echo $exam['multiple_id']; ?>"/>
+                                        <input name="score" type="hidden" value="<?php echo $score; ?>"/>
+                                        <input name="type" type="hidden" value="<?php echo $type; ?>"/>
+                                        <input name="dt" type="hidden" value="<?php echo $now; ?>"/>
+                                        <input name="target" type="hidden" value="<?php echo $target['competition_id']; ?>"/>
+                                        <div class="clear"></div>
+                                    </div>
+                                    <div class="shuruwzhanghao_b">
+                                        <p class="shuruwzhanghaoa">验证码  : </p>
+                                        <input name="verify" type="text" class="wenbenshurukb" />
+                                        <p class="shuruwzhanghao_c">
+                                            <img class="verify" src="__APP__/const/verify/" width="73" height="24" />
+                                        </p>
+                                        <p class="tijiaoanniugmg"><a href="javascript:subm()">提交</a></p>
+                                        <div class="clear"></div>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="shuruwzhanghao_b">
+                                        <p class="shuruwzhanghaoa">KEY  : </p>
+                                        <input name="key" type="text" class="wenbenshuruk" />
+                                        <input name="exam" type="hidden" value="<?php echo $exam['targetcomp_id']; ?>"/>
+                                        <input name="score" type="hidden" value="<?php echo $score; ?>"/>
+                                        <input name="target" type="hidden" value="<?php echo $target['competition_id']; ?>"/>
+                                        <input name="dt" type="hidden" value="<?php echo $now; ?>"/>
+                                        <input name="type" type="hidden" value="<?php echo $type; ?>"/>
+                                        <div class="clear"></div>
+                                        <div class="shuruwzhanghao_b">
+                                            <p class="shuruwzhanghaoa">验证码  : </p>
+                                            <input name="verify" type="text" class="wenbenshurukb" />
+                                            <p class="shuruwzhanghao_c">
+                                                <img class="verify" src="__APP__/const/verify/" width="73" height="24" />
+                                            </p>
+                                            <p class="tijiaoanniugmg"><a href="javascript:subm()">提交</a></p>
+                                            <div class="clear"></div>
+                                        </div>
+                                    </div>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="anniushangyite" <?php echo session('is_range') == 0 ? "style='display:none;'" : ""; ?>>
+                        <ul>
+                            <?php if ($now != 1): ?>
+                                <li>
+                                    <a href="<?php echo U('target/exam', array('dt' => $now - 1, 'tid' => $target['competition_id'])); ?>">上一题</a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if ($now != $target['question_num']): ?>
+                                <li style="float: right;">
+                                    <a href="<?php echo U('target/exam', array('dt' => $now + 1, 'tid' => $target['competition_id'])); ?>">下一题</a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if ($now == $target['question_num']): ?>
+                                <li style="float: right;">
+                                    <a href="<?php echo U('target/index'); ?>">提交</a>
+                                </li>
+                            <?php endif; ?>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="main_nrrihtr">
+                    <p id='seconds' style="display:none;"><?php echo ConstModel::getTimeDiff(strtotime($target['endtime'])); ?></p>
+                    <p class="daosjiewhiengeg">倒计时 ：还剩<?php echo ConstModel::getTimeDiff(strtotime($target['endtime']), FALSE); ?></p>
+                    <div class="daosjiwehgbiaoweg">
+                        <ul></ul>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="zhujinegwenz">
+                        <?php if (session('is_range') == 1): ?>
+                            <?php foreach ($vms_array as $vms): ?>
+                                <a href="<?php echo U('target/start', array('id' => $vms['name'])); ?>" target="_blank">
+                                    <dl>
+                                        <dd>
+                                            <img src="__PUBLIC__/home/images/zhuko.png" width="159" height="167" />
+                                        </dd>
+                                        <dt><?php echo $vms['name'] ?></dt>
+                                    </dl>
+                                </a>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        function subm() {
+            sub('__APP__/target/judge', $('#form').serialize(), function (res) {
+                if (res.data == true) {
+                    window.location.href = "<?php echo U('target/exam', array('dt' => $now + 1, 'tid' => $target['competition_id'])); ?>";
+                } else {
+                    if (res.status == 1) {
+                        alert('答题正确');
+                    } else if (res.status == 2) {
+                        alert('答题错误');
+                    } else if (res.status == 3) {
+                        alert('该题已作答');
+                    }else {
+                        alert("验证码错误");
+                    }
+                }
+            });
+        }
+        $('.verify').click(function () {
+            $(this).attr('src', '__APP__/const/verify');
+        });
+        timemove();
+        targetQuest("__APP__/target/exam/tid/<?php echo $target['competition_id']; ?>/dt/", '<?php echo $target['question_num']; ?>', '<?php echo $now; ?>', [<?php echo $right; ?>], [<?php echo $wrong; ?>]);
+    </script>
+</html>

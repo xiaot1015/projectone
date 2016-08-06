@@ -1,0 +1,62 @@
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/uediter/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/uediter/ueditor.all.min.js"></script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/uediter/lang/zh-cn/zh-cn.js"></script>
+<script>
+    UE.getEditor('introduction');
+    UE.getEditor('editorValue');
+    UE.getEditor('red_task');
+    UE.getEditor('blue_task');
+</script>
+<div id="right">
+    <div id="course">
+        <div id="tit">比赛流程引导：</div>
+        <ul id="course_ul">
+            <li class="li11">基本信息</li>
+            <li class="li20">选择人员</li>
+            <li class="li40">应用发布</li>
+        </ul>
+    </div>
+    <form method="post" name="form1" action="__APP__/fightcompaign/set_competition_teams">
+        <div id="notice1">
+            <div>
+                <span>对抗靶场名称：</span>
+                <input type="text" name="competition_name">
+            </div>
+            <div>
+                <span style="	margin-right:30px;">比赛时间：</span>
+                <input style="left:20px;width:200px;"  type="text"  name='time_before'>
+                至
+                <input style="left:20px;width:200px;"  type="text"  name='time_after'>
+            </div>
+            <div>
+                <span >比赛简介：</span>
+            </div>
+            <div>
+                <textarea name="introduction" id="introduction"></textarea>
+            </div>
+            <div>
+                <span >比赛公告：</span>
+            </div>
+            <div>
+                <textarea name="editorValue" id="editorValue"></textarea>
+            </div>
+            <div>
+                <span >红队任务：</span>
+            </div>
+            <div>
+                <textarea name="red_task" id="red_task"></textarea>
+            </div>
+            <div>
+                <span >蓝队任务：</span>
+            </div>
+            <div>
+                <textarea name="blue_task" id="blue_task"></textarea>
+            </div>
+        </div>
+        <div class="tijiawanigahnegg"  style="margin-top:10px;margin-left:500px;">
+            <a href="javascript:form1.submit();"><h2>下一步</h2></a>
+        </div>
+    </form>
+</div>
