@@ -1,0 +1,136 @@
+<script src="__PUBLIC__/ace/assets/js/jquery-1.10.2.min.js"></script>
+<div class="breadcrumbs" id="breadcrumbs">
+  <script type="text/javascript">
+    try {
+      ace.settings.check('breadcrumbs', 'fixed')
+    } catch (e) {
+    }
+  </script>
+</div>
+
+<div class="page-content">
+  <div class="page-header">
+    <div class="col-sm-12">
+      <div class="widget-box">
+        <div class="widget-header">
+          <h4>上传图片</h4>
+        </div>
+
+        <div class="widget-body">
+          <div class="widget-main">
+              <input type="file" name="uppic" id="uppic" style="display:none;" >
+              <button class="btn btn-info btn-sm" onclick="up()">
+                <i class="icon-key bigger-110"></i> 选择图片 
+              </button>
+              <label>图片地址</label>
+              <input type="text" name="img_url" id="img_url" value="" class="input-small" disabled>
+          </div>
+        </div>
+      </div>
+      <div class="space-6"></div>
+
+    </div>
+  </div><!-- /.page-header -->
+
+  <div class="row">
+    <div class="col-xs-12">
+      <!-- PAGE CONTENT BEGINS -->
+
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="table-responsive">
+            <table id="sample-table-1" class="table table-striped table-bordered table-hover">
+              <thead>
+                  <th>ID</th>
+                  <th>图片</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+              <foreach name="list" item="info" >
+                <tr>
+                  <td>{$info.id}</td>
+                  <td><a href="{$info.imgs}" target="_bank"> <img src="{$info.imgs}" style="height:50px;width:60px;"/></a></td>
+                  <td class="hidden-480">
+                    <button class="btn btn-xs btn-danger" onclick="del({$info.id})")>删除</button>
+                  </td>
+                </tr>
+                </foreach>
+                <tr><td align="right" colspan="3">{$page}</td></tr>
+              </tbody>
+            </table>
+          </div>
+          
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+    
+    <!-- PAGE CONTENT ENDS -->
+  </div><!-- /.col -->
+</div><!-- /.row -->
+</div>
+<script type="text/javascript">
+function del(id){
+  if(id == "") return alert("ID ERROR");
+	//var tmp = window.confirm("确定要执行该操作吗？");
+	//if (tmp === true){
+  var url = "{:U('Scrollimg/del')}";
+		$.post(url,{id:id},function(data){
+			if(data.status == 1){
+				alert(data.info);
+				window.location.reload();
+			}else{
+				alert(data.info);
+				return false;
+			}
+		});
+	//}
+}
+function up(){
+    $("#uppic").click();
+}
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+      var upurl = "{:U('Upload/uploadpic')}";
+     $("#uppic").change(function() {
+          $("#uppic").wrap("<form class='myupload' id='myupload' action='" + upurl + "' method='post' enctype='multipart/form-data'></form>");
+          $(".myupload").attr("action", upurl + '?time=' + Math.random());
+          var filepath = $("#uppic").val();
+          var extStart = filepath.lastIndexOf(".");
+          var ext = filepath.substring(extStart, filepath.length).toUpperCase();
+          if (ext != ".BMP" && ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG" && ext != ".BMP") {
+               alert('文件格式不对！');
+               return false;
+          }
+          var file_size = 0;
+          file_size = this.files[0].size;
+          if (file_size / 1024 / 1024 > 30) {
+               alert('文件大小不能超过30M');
+               return false;
+          }
+          setTimeout(function(){
+               $("#uppic").parent().ajaxSubmit({
+                    dataType : 'json',
+                    data : {
+                         'photofield' : 'uppic',
+                         'scroll' : '1',
+                    },
+                    type:'post',
+                    success : function(data) {
+                         if (data.status == 1) {
+                             //$("#img_url").val(data.info);
+                             window.location.reload();
+                         }
+                    },
+                    error : function(xhr) {
+                         var msg = xhr.responseText;
+                         if(!msg){
+                              msg = '上传失败';
+                         }
+                         return false;
+                    }
+               });
+          }, 1000);
+     });
+});
+</script>

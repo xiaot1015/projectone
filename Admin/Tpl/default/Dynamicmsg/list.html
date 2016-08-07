@@ -5,44 +5,9 @@
     } catch (e) {
     }
   </script>
-
-  <!-- <ul class="breadcrumb">
-    <li>
-      <i class="icon-home home-icon"></i>
-      <a href="#">对抗题库</a>
-    </li>
-    <li class="active">列表</li>
-  </ul> --><!-- .breadcrumb -->
 </div>
 
 <div class="page-content">
-  <div class="page-header">
-    <div class="col-sm-12">
-      <div class="widget-box">
-        <div class="widget-header">
-          <h4>按条件搜索</h4>
-        </div>
-
-        <div class="widget-body">
-          <div class="widget-main">
-            <form class="form-inline" name="" action="{:U('ResistExamination/getlist')}" method="post">
-              <label>题目名称</label>
-              <input type="text" name="question" value="{$question}" class="input-small" placeholder="题目名称">
-              <label>目标机</label>
-              <input type="text" class="input-small" placeholder="目标机">
-              <button type="submit" class="btn btn-info btn-sm">
-                <i class="icon-key bigger-110"></i> 搜索
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="space-6"></div>
-
-    </div>
-  </div><!-- /.page-header -->
-
   <div class="row">
     <div class="col-xs-12">
       <!-- PAGE CONTENT BEGINS -->
@@ -51,7 +16,7 @@
         <div class="col-xs-12">
         	<ul id="inbox-tabs" class="inbox-tabs nav nav-tabs padding-16 tab-size-bigger tab-space-1">
               <li class="li-new-mail pull-left">
-                <a  href="../ResistExamination/add" class="btn-new-mail">
+              <a  href="{:U('Dynamicmsg/add')}" class="btn-new-mail">
                   <span class="btn bt1n-small btn-purple no-border">
                     <i class=" icon-envelope bigger-130"></i>
                     <span class="bigger-110">新建</span>
@@ -59,14 +24,6 @@
                 </a>
               </li><!-- ./li-new-mail -->
 
-              <li class="li-new-mail pull-left">
-                <a href="javascript:void(0);" class="btn-new-mail" onclick="del();">
-                  <span class="btn bt1n-small btn-purple no-border">
-                    <i class=" icon-envelope bigger-130"></i>
-                    <span class="bigger-110">删除</span>
-                  </span>
-                </a>
-              </li><!-- ./li-new-mail -->
             </ul>
             
           <div class="table-responsive">
@@ -79,9 +36,9 @@
                     </label>
                   </th>
                   <th>ID</th>
-                  <th>对抗靶场</th>
-                  <th>分类</th>
-                  <th>分数</th>
+                  <th>标题</th>
+                  <th>视频地址</th>
+                  <th>简介</th>
                   <th>操作</th>
                 </tr>
               </thead>
@@ -94,14 +51,13 @@
                       <span class="lbl"></span>
                     </label>
                   </td>
-                  <td>{$info.resistcomp_id}</td>
-                  <td>{$info.question}</td>
-                  <td>{$resistbank[$info['bank_type_id']]}</td>
-                  <td>{$info.score}</td>
-                  
+                  <td>{$info.id}</td>
+                  <td>{$info.title}</td>
+                  <td>{$info.video_url}</td>
+                  <td>{$info.introduction}</td>
                   <td class="hidden-480">
-                    <a class="btn btn-xs btn-info" href="../ResistExamination/add?id={$info.resistcomp_id}">修改</a>
-                    <button class="btn btn-xs btn-danger" onclick="del({$info.resistcomp_id})")>删除</button>
+                      <a class="btn btn-xs btn-info" href="{:U('Dynamicmsg/add',array('id'=>$info['id']))}">修改</a>
+                    <button class="btn btn-xs btn-danger" onclick="del({$info.id})")>删除</button>
                   </td>
                 </tr>
                 </foreach>
@@ -122,7 +78,7 @@ function del(id){
   if(id == "") return alert("ID ERROR");
 	//var tmp = window.confirm("确定要执行该操作吗？");
 	//if (tmp === true){
-		var url = "../ResistExamination/delete";
+  var url = "{:U('Dynamicmsg/del')}";
 		$.post(url,{id:id},function(data){
 			if(data.status == 1){
 				alert(data.info);
