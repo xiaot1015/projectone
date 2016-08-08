@@ -79,14 +79,14 @@
 </div><!-- /.page-content -->
 <script>
 $(document).ready(function(){
-      var upurl = "{:U('Upload/uploadpic')}";
+      var upurl = "{:U('Upload/uploadvideo')}";
      $("#uppic").change(function() {
           $("#uppic").wrap("<form class='myupload' id='myupload' action='" + upurl + "' method='post' enctype='multipart/form-data'></form>");
           $(".myupload").attr("action", upurl + '?time=' + Math.random());
           var filepath = $("#uppic").val();
           var extStart = filepath.lastIndexOf(".");
           var ext = filepath.substring(extStart, filepath.length).toUpperCase();
-          if (ext != ".BMP" && ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG" && ext != ".BMP") {
+          if (ext != ".MP4") {
                alert('文件格式不对！');
                return false;
           }
@@ -106,15 +106,6 @@ $(document).ready(function(){
                     success : function(data) {
                          if (data.status == 1) {
                               $("#video_url").val(data.info);
-/*
-                              $("#oldimg").hide();
-                              var img = "{{$HOST_FILE}}" + "/" + data.pic;
-                              var img_str = "<dl style='padding-top:5px;margin-right:5px;float:left;'>";
-                              img_str += "<dd><img src='" + img + "' style='width:120px;height:120px;margin-top:4px;'></dd>";
-                              img_str += "</dl>";
-                              $('#show_upload_img').html(img_str);
-                              $('#pic').val(data.pic);
-*/
                          }
                     },
                     error : function(xhr) {
