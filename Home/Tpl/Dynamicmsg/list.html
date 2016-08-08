@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <?php require_once APP_PATH . "/Tpl/header.html"; ?>
+    </head>
+    <body>
+        <div class="box">
+            <?php require_once APP_PATH . "/Tpl/top.html"; ?>
+            <div class="jingsaipeiming" style=" margin-top:0px;">
+            </div>
+            <table>
+            <foreach name="$list" item="info">
+                    <tr>
+                        <td>{$info.title}</td>
+                        <td><img src="{$info.thumb_img}" style="height:100px';width:100px;"></td>
+                        <td>{$info.content|html_entity_decode}</td>
+                    </tr>
+
+            </foreach>
+
+            </table>
+        </div>
+    </body>
+    <script>
+        $(function () {
+            reloading();
+        });
+    </script>
+</html>
