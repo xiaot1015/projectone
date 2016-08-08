@@ -3,9 +3,9 @@
  * 头条
  * 
  */
-class PreviewMsgAction extends Action{
+class NoticeMsgAction extends Action{
     const PAGESIZE = 20;
-	private $msgtype = 2;
+	private $msgtype = 4;
 	/**
 	 * 跳转到添加页面
 	 */
@@ -60,7 +60,6 @@ class PreviewMsgAction extends Action{
         $title = $this->_param('title');
         $introduction = $this->_param('introduction');
         $content = $this->_param('content');
-        $img_url = $this->_param('imgurl');
         $videourl = $this->_param('videourl');
 
 		if(empty($id) && $type == 'edit'){
@@ -69,13 +68,12 @@ class PreviewMsgAction extends Action{
         $data = array(
             'title' => $title ,
             'introduction' => $introduction,
-            'thumb_img' => $img_url,
             'video_url' => $videourl,
             'content' =>  htmlspecialchars($_POST["content"]) ,
             'status ' => 0 ,
             'type' => $this->msgtype ,
         );
-		$model = D('msg');
+		$model = D('Msg');
         if($type == 'edit' && !empty($id)){
 		    $ret = $model->updateMsgById($data,$id);
         } else {

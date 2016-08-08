@@ -69,7 +69,7 @@ class AwardAction extends Action{
             'status ' => 0 ,
             'type' => $this->msgtype ,
         );
-		$model = D('msg');
+		$model = D('Msg');
         if($type == 'edit' && !empty($id)){
 		    $ret = $model->updateMsgById($data,$id);
         } else {

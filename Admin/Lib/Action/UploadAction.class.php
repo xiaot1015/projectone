@@ -53,7 +53,8 @@ class UploadAction extends Action{
     }
 
     public function getLinkUrl($fpath,$fname){
-        $server = C('HOST_ADMIN');
+        #$server = C('HOST_ADMIN');
+        $server = "http://".$_SERVER['HTTP_HOST'];
         $lnk = $server . trim($fpath,'.') .  $fname;
         return $lnk;
     }
