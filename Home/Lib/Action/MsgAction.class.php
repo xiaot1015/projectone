@@ -3,9 +3,16 @@
  * 头条
  * 
  */
-class DynamicMsgAction extends Action{
-    const PAGESIZE = 20;
+class MsgAction extends Action{
+        const PAGESIZE = 20;
 	private $msgtype = 0;
+
+	public function index(){
+		$this->display();
+	}
+	public function cixiulist(){
+		$this->display("cixiulist_nei");
+	}
 	/**
 	 * 跳转到添加页面
 	 */

@@ -3,8 +3,7 @@
 class IndexAction extends Action {
 
     public function index() {
-        $this->redirect('User/index');
-        echo "'aa'";exit;
+        $this->display('./Home/Tpl/index.html');
     }
 
     public function menu() {

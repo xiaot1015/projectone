@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<include file="./Home/Tpl/header.html" />
+
+<!--头条-->
+<div class="toutiao">
+  <h2><a href="#">第四届中国非物质文化遗产博览会传统工艺项目比赛正式启动</a></h2>
+</div>
+<!--比赛动态-->
+<div class="bisai">
+  <div class="bisai_left">
+    <div class="bisai_lefttop">
+	<div id="wrap">
+	<ul class="hiSlider hiSlider3">
+		<li class="hiSlider-item"><img src="__PUBLIC__/home/images/shuxiuxiangcun.jpg" alt="蜀秀.至美乡村" width="683" height="457"></li>
+		<li class="hiSlider-item"><img src="__PUBLIC__/home/images/la.png" alt="拉坯技艺" width="683" height="457"></li>
+		<li class="hiSlider-item"><img src="__PUBLIC__/home/images/ni.png" alt="泥条盘筑技艺" width="683" height="457"></li>
+		<li class="hiSlider-item"><img src="__PUBLIC__/home/images/cixiu2.jpg" alt="刺绣" width="683" height="457"></li>
+		<li class="hiSlider-item"><img src="__PUBLIC__/home/images/IMG_20160124_103411 (1).jpg" alt="泥面塑" width="683" height="457"></li>
+		<li class="hiSlider-item"><img src="__PUBLIC__/home/images/zhubian.JPG" alt="竹编" width="683" height="457"></li>
+		<li class="hiSlider-item"><img src="__PUBLIC__/home/images/cixiu.jpg" alt="刺绣" width="683" height="457"></li>
+		<li class="hiSlider-item"><img src="__PUBLIC__/home/images/taoyi.jpg" alt="陶艺" width="683" height="457"></li>
+	</ul>
+	</div>
+<script src="__PUBLIC__/home/js/jquery.1.9.1.js"></script>
+<script src="__PUBLIC__/home/js/jquery.hiSlider.min.js"></script>
+<script>
+	$('.hiSlider1').hiSlider();
+	$('.hiSlider2').hiSlider({
+		isFlexible: true,
+		mode: 'fade',
+		isSupportTouch: false,
+		isShowTitle: false,
+		isShowPage: false,
+		titleAttr: function(curIdx){
+			return $('img', this).attr('alt');
+		}
+	});
+	$('.hiSlider3').hiSlider({
+		isFlexible: true,
+		isSupportTouch: true,
+		titleAttr: function(curIdx){
+			return $('img', this).attr('alt');
+		}
+	});
+	$('.hiSlider4').hiSlider({
+		startSlide: 2,
+		direction: 'top'
+	});
+</script>
+
+		
+	</div>
+    <ul class="bisai_btn">
+      <li class="btn1"><A href="{:U('Msg/jianzhilist')}">
+        <h2>剪纸</h2>
+        <p>我要报名</p>
+        </A></li>
+      <li class="btn2"><A href="{:U('Msg/cixiulist')}">
+        <h2>刺绣</h2>
+        <p>我要报名</p>
+        </A></li>
+      <li class="btn3"><A href="{:U('Msg/zhubianlist')}">
+        <h2>竹编</h2>
+        <p>我要报名</p>
+        </A></li>
+      <li class="btn4"><A href="{:U('Msg/caoliulist')}">
+        <h2>草柳藤编织</h2>
+        <p>我要报名</p>
+        </A></li>
+      <li class="btn5"><A href="{:U('Msg/taocilist')}">
+        <h2>陶瓷手工成型</h2>
+        <p>我要报名</p>
+        </A></li>
+      <li class="btn6"><A href="{:U('Msg/caoliulist')}">
+        <h2>泥面塑</h2>
+        <p>我要报名</p>
+        </A></li>
+    </ul>
+  </div>
+  <div  class="bisai_right">
+    <div class="bisai_righttop">
+      <h2><a href="#">比赛动态</a></h2>
+      <a href="dongtailist.html" class="more">更多>></a > </div>
+    <div class="bisai_z">
+      <h1>传统工艺项目比赛正式启动(草柳藤编织 泥面塑)</h1>
+      <p>近日，第四届中国非物质文化遗产博览会传统工艺项目（草柳藤编织、泥面塑）比赛在济南正式启动。比赛分为初赛与决赛两个阶段。<a target="_bank" href="http://www.51feiyi.com/tongqihuodong.php?id=218">【详情】</a></p>
+    </div>
+    <ul class="bisai_list">
+      <li><a target="_bank" href="http://www.zgjzds.cn/col.jsp?id=112">·中国传统工艺剪纸大赛方案</a></li>
+      <li title="关于举办第四届中国非物质文化遗产博览会传统工艺项目（陶瓷手工成型）比赛的通知"><a target="_bank" href="http://www.jxfwzwhycw.com/content.aspx?fd=6&fn=%E5%B7%A5%E4%BD%9C%E4%BA%A4%E6%B5%81&sd=15&sn=%E5%85%AC%E5%91%8A&ad=377" >·关于举办第四届中国非物质文化遗产博览会传统工艺项目（陶瓷手工成</a></li>
+      <li><a href="http://www.zgjzds.cn/">·上海赛场剪纸比赛入围作品</a></li>
+    </ul>
+    <div class="bisai_rightxia">
+      <h2><a href="#">比赛通知</a></h2>
+      <a href="{:U('Msg/tongzhilist')}" class="more">更多>></a > </div>
+    <ul class="bisai_list">
+      <li><a target="_bank" href="http://www.51feiyi.com/tongqihuodong.php?id=211">·济南赛场：传统工艺项目（草柳藤编织、泥面塑）比赛章程</a></li>
+      <li><a href="{:U('Msg/caoliulist')}">·传统工艺项目（刺绣）比赛实施方案</a></li>
+      <li><a target="_bank" href="http://www.zgjzds.cn/col.jsp?id=112">·上海赛场：中国传统工艺剪纸大赛方案</a></li>
+      <li><a href="{:U('Msg/zhubianlist')}">·传统工艺项目（竹编）比赛实施方案</a></li>
+      <li><a target="_bank" href="http://www.jxfwzwhycw.com/content.aspx?fd=6&fn=%E5%B7%A5%E4%BD%9C%E4%BA%A4%E6%B5%81&sd=15&sn=%E5%85%AC%E5%91%8A&ad=377">·景德镇赛场：传统工艺（陶瓷手工成型）比赛通知</a></li>
+    </ul>
+  </div>
+</div>
+<!--比赛日程-->
+<div class="bisai_richeng">
+  <div class="bisai_richengtop">
+    <h2><a href="#">比赛流程</a></h2>
+  </div>
+  <div class="richeng_xia"> <img src="__PUBLIC__/home/images/baoming.png" width="1112" height="142" /> </div>
+</div>
+<!--比赛预览-->
+<div class="yulan_top"></div>
+<div class="yulan_xia">
+  <div class="yulan1"><a href="#"><img src="__PUBLIC__/home/images/yulan (6).jpg" width="531" height="278" /></a></div>
+  <div class="yulan2"><a href="#"><img src="__PUBLIC__/home/images/yulan (1).jpg" width="751" height="514" /></a></div>
+  <div class="yulan3"><a href="#"><img src="__PUBLIC__/home/images/yulan (2).jpg" width="287" height="551" /></a></div>
+  <div class="yulan4"><a href="#"><img src="__PUBLIC__/home/images/yulan (3).jpg" width="233" height="230" /></a></div>
+  <div class="yulan5"><a href="#"><img src="__PUBLIC__/home/images/yulan (4).jpg" width="508" height="312" /></a></div>
+  <div class="yulan6"><a href="#"><img src="__PUBLIC__/home/images/yulan (5).jpg" width="479" height="309" /></a></div>
+  <div class="clear"></div>
+</div>
+<!--组织机构-->
+<div class="zuzhi">
+  <div class="bisai_richengtop zuzhi_top">
+    <h2><a href="#">组织机构</a></h2>
+  </div>
+  <div class="zuzhi_xia">
+    <div class="zuzhi_l">
+      <p><span>指导单位：</span>文化部非物质文化遗产司</p>
+      <p><span>主办单位：</span>第四届中国非物质文化遗产博览会组委会</p>
+      <p><span>支持单位：</span>中国手艺网</p>
+    </div>
+    <div class="zuzhi_r">
+      <p>承办单位：</p>
+      <ul>
+        <li><a href="#">上海市文化广播影视管理局</a></li>
+        <li><a href="#">济南市文化广电新闻出版局 </a></li>
+        <li><a href="#">成都市文化广电新闻出版局</a></li>
+        <li><a href="#">景德镇市文化和广播电影电视局</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--合作媒体-->
+<div class="meiti">
+  <div class="bisai_richengtop zuzhi_top">
+    <h2><a href="#">合作媒体</a></h2>
+  </div>
+  <ul class="meiti_xia">
+    <li><a href="#"><img src="__PUBLIC__/home/images/hezuo1.png" /></a></li>
+    <li><a href="#"><img src="__PUBLIC__/home/images/hezuo2.png" /></a></li>
+  </ul>
+</div>
+
+<include file="./Home/Tpl/footer.html" />
+
+</body>
+</html>
