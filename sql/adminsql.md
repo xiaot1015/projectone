@@ -24,6 +24,7 @@ CREATE TABLE `tb_msg` (
 CREATE TABLE `tb_scroll_img` ( 
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增ID', 
   `imgs` varchar(1000) NULL DEFAULT '' COMMENT '轮播图地址，json格式',
+  `title` varchar(200) NULL DEFAULT '' COMMENT '图标题',
   `ctime` datetime  NULL COMMENT '插入时间',
   `status` int(1) NULL DEFAULT '0' comment '状态', 
   PRIMARY KEY (`id`) 

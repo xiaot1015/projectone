@@ -4,15 +4,115 @@
  * 
  */
 class MsgAction extends Action{
-        const PAGESIZE = 20;
-	private $msgtype = 0;
+    const PAGESIZE = 20;
 
+    private $msgtypearr = array(
+        '0' => 'dynamic',
+        '1' => 'top',
+        '2' => 'preview',
+        '3' => 'award',
+        '4' => 'notice',
+        '5' => 'jianzhi',
+        '6' => 'cixiu',
+        '7' => 'zhubian',
+        '8' => 'caoliu',
+        '9' => 'taoci',
+        '10' => 'nimian',
+    );
+
+    /**
+    *   首页
+    */
 	public function index(){
+
+        // toutiao 
+        $toutiao = M('tb_msg')->where("type=%d",1)->order("id desc")->find();
+
+        //dongtai  
+        $dongtailist = M('tb_msg')->where("type=%d",0)->order("id desc")->limit(4)->select();
+        $dongtaiinfo = array_shift($dongtailist);
+
+        //scroll  
+        $scrollimglist = M('tb_scroll_img')->order("id desc")->limit(8)->select();
+
+        //tongzhi 
+        $tongzhilist = M('tb_msg')->where("type=%d",4)->order("id desc")->limit(4)->find();
+
+        $this->assign('tongzhilist',$tongzhilist);
+        $this->assign('scrollimglist',$scrollimglist);
+        $this->assign('dongtailist',$dongtailist);
+        $this->assign('dongtaiinfo',$dongtaiinfo);
+        $this->assign('toutiao',$toutiao);
 		$this->display();
 	}
-	public function cixiulist(){
-		$this->display("cixiulist_nei");
+
+    
+    public function tongzhilist(){
+        $this->getlist(4);
 	}
+
+    public function dongtai(){
+        $id = $this->_param('id');
+        if(empty($id)) $this->error("wrong id");
+
+        $info = M('tb_msg')->where("id=%d",$id)->find();
+        $this->assign("info",$info);
+        $this->display();
+    }
+
+    public function getlist($msgtype){
+        $msgtype = intval($msgtype);
+        if(empty($msgtype) || $msgtype > 11) $this->error("error");
+        $limit = 20;
+        $list = $this->getListByType($msgtype,$limit);
+        $this->assign("msgtype",$msgtype);
+        $this->assign("list",$list);
+		$this->display("dongtailist");
+	}
+    public function dongtailist(){
+        $limit = 20;
+        $msgtype = 0;
+        $list = $this->getListByType($msgtype,$limit);
+        $this->assign("msgtype",$msgtype);
+        $this->assign("list",$list);
+		$this->display("dongtailist");
+	}
+    public function preview(){
+        $limit = 20;
+        //scroll  
+        $scrollimglist = M('tb_scroll_img')->order("id desc")->limit(8)->select();
+        $this->assign("list",$list);
+		$this->display("dongtailist");
+	}
+
+    public function award(){
+        $this->getlist(3);
+	}
+    public function zhubianlist(){
+        $this->getlist(7);
+	}
+    public function caoliulist(){
+        $this->getlist(8);
+	}
+
+    public function taocilist(){
+        $this->getlist(9);
+	}
+
+    public function jianzhilist(){
+        $this->getlist(5);
+	}
+
+    public function cixiulist(){
+        $this->getlist(10);
+	}
+
+    private function getListByType($msgtype =0 , $limit = 1){
+        $model = M('tb_msg');
+        $list = $model->where("type = %d ",$msgtype)->limit($limit)->select();
+        return $list;
+        
+    }
 	/**
 	 * 跳转到添加页面
 	 */
@@ -28,83 +128,6 @@ class MsgAction extends Action{
 		$this->display();
 	}
 	
-	/**
-	 * get info list   with search condition
-	 */
-	public function getList(){
-
-		$id = $this->_param("id");
-		$wherearr = array();
-		if(!empty($id)){
-			$wherearr['id'] = array(0=>$id,1=>'=');
-			$this->assign("id",$id);
-		}
-		if(!empty($question)){
-			$wherearr['question'] = array(0=>$question,1=>'like');
-			$this->assign("question",$question);
-		}
-        $wherearr['type'] = array(0=>$this->msgtype,1=>'=');
-		$where = "1=1 ";
-		$model = M('tb_msg');
-		$where .= $this->_change_to_wherestr($wherearr);
-
-		import("ORG.Util.Page");
-		$count = $model->where($where)->count();
-		$p = new Page($count,self::PAGESIZE);
-		$limit = $p->firstRow.','.$p->listRows;
-		$page = $p->show();
-		
-		$list = $model->where($where)->order("id desc")->limit($limit)->select();
-        
-		if(isset($_GET['debug'])){
-			print_r($list);exit;
-		}
-		$this->assign("page",$page);
-		$this->assign("list",$list);
-		$this->display('list');
-	}
-
-	private function updateMsg(){
-        $id = $this->_param('id');
-        $type = $this->_param('type');
-        $title = $this->_param('title');
-        $introduction = $this->_param('introduction');
-        $content = $this->_param('content');
-        $videourl = $this->_param('videourl');
-
-		if(empty($id) && $type == 'edit'){
-			$this->ajaxReturn("failed!","操作失败",0);
-		}
-        $data = array(
-            'title' => $title ,
-            'introduction' => $introduction,
-            'video_url' => $videourl,
-            'content' =>  htmlspecialchars($_POST["content"]) ,
-            'status ' => 0 ,
-            'type' => $this->msgtype ,
-        );
-		$model = D('Msg');
-        if($type == 'edit' && !empty($id)){
-		    $ret = $model->updateMsgById($data,$id);
-        } else {
-            $ret = $model->addMsg($data);
-        }
-		if($ret === false){
-			$this->ajaxReturn("failed!","操作失败",0);
-		}else{
-			$this->ajaxReturn("ok!","操作成功",1);
-		}
-	}
-	private function del(){
-		$id = $this->_param('id');
-		$model = M('tb_msg');
-		$ret = $model->where("id = %d",$id)->delete();
-		if($ret === false){
-			$this->ajaxReturn("failed!","操作失败",0);
-		}else{
-			$this->ajaxReturn("ok!","操作成功",1);
-		}
-	}
 	/**
 	 * 将数组转换成where 模式字符串
 	 */

@@ -3,20 +3,22 @@
  * 头条
  * 
  */
-class NoticeMsgAction extends Action{
+class MsgAction extends Action{
     const PAGESIZE = 20;
-	private $msgtype = 4;
+	private $msgtype = 0;
 	/**
 	 * 跳转到添加页面
 	 */
-	private function add(){
+	public function add(){
 		$id = $this->_param('id');
+		$msgtype = $this->_param("msgtype");
 		$type = "add";
 		if(!empty($id)){
 			$info = D('Msg')->getMsgInfo($id);
 			$type = "edit";
 			$this->assign("info",$info);
         }
+		$this->assign("msgtype",$msgtype);
         $this->assign("type",$type);
 		$this->display();
 	}
@@ -27,6 +29,7 @@ class NoticeMsgAction extends Action{
 	public function getList(){
 
 		$id = $this->_param("id");
+		$msgtype = $this->_param("msgtype");
 		$wherearr = array();
 		if(!empty($id)){
 			$wherearr['id'] = array(0=>$id,1=>'=');
@@ -36,7 +39,7 @@ class NoticeMsgAction extends Action{
 			$wherearr['question'] = array(0=>$question,1=>'like');
 			$this->assign("question",$question);
 		}
-        $wherearr['type'] = array(0=>$this->msgtype,1=>'=');
+        $wherearr['type'] = array(0=>$msgtype,1=>'=');
 		$where = "1=1 ";
 		$model = M('tb_msg');
 		$where .= $this->_change_to_wherestr($wherearr);
@@ -50,17 +53,19 @@ class NoticeMsgAction extends Action{
 		$list = $model->where($where)->order("id desc")->limit($limit)->select();
         
 		$this->assign("page",$page);
+		$this->assign("msgtype",$msgtype);
 		$this->assign("list",$list);
 		$this->display('list');
 	}
 
-	private function updateMsg(){
+	public function updateMsg(){
         $id = $this->_param('id');
         $type = $this->_param('type');
         $title = $this->_param('title');
         $introduction = $this->_param('introduction');
         $content = $this->_param('content');
         $videourl = $this->_param('videourl');
+        $msgtype = $this->_param('msgtype');
 
 		if(empty($id) && $type == 'edit'){
 			$this->ajaxReturn("failed!","操作失败",0);
@@ -71,7 +76,7 @@ class NoticeMsgAction extends Action{
             'video_url' => $videourl,
             'content' =>  htmlspecialchars($_POST["content"]) ,
             'status ' => 0 ,
-            'type' => $this->msgtype ,
+            'type' => $msgtype ,
         );
 		$model = D('Msg');
         if($type == 'edit' && !empty($id)){
@@ -85,7 +90,7 @@ class NoticeMsgAction extends Action{
 			$this->ajaxReturn("ok!","操作成功",1);
 		}
 	}
-	private function del(){
+	public function del(){
 		$id = $this->_param('id');
 		$model = M('tb_msg');
 		$ret = $model->where("id = %d",$id)->delete();

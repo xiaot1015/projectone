@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<include file="./Home/Tpl/header.html" />
+
+<!--列表内容-->
+<div id="list_nei">
+    <h2 class="list_btn">{$info.title}</h2>
+    <div class="date">更新时间：<a href="#">{$info.ctime}</a></div>
+	<div class="list_con">
+        {$info.content|html_entity_decode}
+</div>
+	<ul class="xiazai">
+	<h1>附件下载：</h1>
+		<li><a href="__PUBLIC__/fujian/1zhubiandasaizhengjigonggao.docx">附件1：中国传统工艺（竹编）大赛征集公告.docx</a></li>
+		<li><a href="__PUBLIC__/fujian/2gubiandasaizhengjiguize.docx">附件2：中国传统工艺（竹编）大赛征集规则.docx</a></li>
+		<li><a href="__PUBLIC__/fujian/3zhubiandasaibaomingbiao.docx">附件3：中国传统工艺（竹编）大赛参赛报名表.docx</a></li>
+		<li><a href="__PUBLIC__/fujian/4zhubiandasaichengnuoshu.docx">附件4：中国传统工艺（竹编）大赛参赛者承诺书.docx</a></li>
+		<li><a href="__PUBLIC__/fujian/5zhubiandasaipingxuanguize.docx">附件5：中国传统工艺（竹编）大赛评选规则.docx</a></li>		
+	</ul>
+</div>
+<!--列表内容结束-->
+<include file="./Home/Tpl/footer.html" />
+
+<!--底部结束-->
+</body>
+</html>

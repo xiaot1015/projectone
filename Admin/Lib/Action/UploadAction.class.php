@@ -12,6 +12,7 @@ class UploadAction extends Action{
     public function uploadPic(){
         $upfield = $this->_param('photofield');
         $isdb = $this->_param('scroll');
+        $title = $this->_param('title');
         $data = $_FILES[$upfield];
         import('ORG.Net.UploadFile');
         $upload = new UploadFile();// 实例化上传类
@@ -26,6 +27,7 @@ class UploadAction extends Action{
             if($isdb == 1){
                 $img_arr = array(
                     'imgs' => $lnk,
+                    'title' => $title,
                     'ctime' => date('Y-m-d H:i:s'),
                 );
                 M('tb_scroll_img')->add($img_arr);

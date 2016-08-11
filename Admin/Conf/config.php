@@ -22,6 +22,12 @@ return array(
         2 => 'preview',
         3 => 'award',
         4 => 'notice',
+        '5' => 'jianzhi',
+        '6' => 'cixiu',
+        '7' => 'zhubian',
+        '8' => 'caoliu',
+        '9' => 'taoci',
+        '10' => 'nimian',
     ),
 );
 ?>

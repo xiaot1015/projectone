@@ -22,40 +22,76 @@
 
     <ul class="nav nav-list">
 
-        <li <?php if(in_array($model,$target_models)): ?> class='active' <?php endif;?>>
-            <a href="{:U('Topmsg/getlist')}" class="dropdown-toggle">
+        <li>
+        <a href="{:U('Msg/getlist',array('msgtype'=>1))}" class="dropdown-toggle">
                 <i class="icon-tags"></i>
                 <span class="menu-text"> 头条管理</span>
             </a>
         </li>
-        <li <?php if(in_array($model,$fight_models)): ?> class='active' <?php endif;?>>
-            <a href="{:U('Noticemsg/getlist')}" class="dropdown-toggle">
+        <li>
+        <a href="{:U('Msg/getlist',array('msgtype'=>4))}" class="dropdown-toggle">
                 <i class="icon-tags"></i>
                 <span class="menu-text"> 比赛通知</span>
             </a>
         </li>
-        <li <?php if(in_array($model,$fight_models)): ?> class='active' <?php endif;?>>
-            <a href="{:U('Dynamicmsg/getlist')}" class="dropdown-toggle">
+        <li>
+        <a href="{:U('Msg/getlist',array('msgtype'=>0))}" class="dropdown-toggle">
                 <i class="icon-desktop"></i>
                 <span class="menu-text"> 比赛动态</span>
             </a>
         </li>
         <li>
-            <a href="{:U('Previewmsg/getlist')}" class="dropdown-toggle">
+        <a href="{:U('Msg/getlist',array('msgtype'=>2))}" class="dropdown-toggle">
                 <i class="icon-tags"></i>
                 <span class="menu-text"> 比赛展览</span>
             </a>
         </li>
         <li>
-            <a href="{:U('Award/getlist')}" class="dropdown-toggle">
+            <a href="{:U('Msg/getlist',array('msgtype'=>3))}" class="dropdown-toggle">
                 <i class="icon-tags"></i>
                 <span class="menu-text"> 获奖名单</span>
             </a>
         </li>
         <li>
+            <a href="{:U('Msg/getlist',array('msgtype'=>5))}" class="dropdown-toggle">
+                <i class="icon-tags"></i>
+                <span class="menu-text"> 剪纸</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Msg/getlist',array('msgtype'=>6))}" class="dropdown-toggle">
+                <i class="icon-tags"></i>
+                <span class="menu-text"> 刺绣</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Msg/getlist',array('msgtype'=>7))}" class="dropdown-toggle">
+                <i class="icon-tags"></i>
+                <span class="menu-text"> 竹编</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Msg/getlist',array('msgtype'=>8))}" class="dropdown-toggle">
+                <i class="icon-tags"></i>
+                <span class="menu-text"> 草榴藤</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Msg/getlist',array('msgtype'=>9))}" class="dropdown-toggle">
+                <i class="icon-tags"></i>
+                <span class="menu-text"> 陶瓷</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('Msg/getlist',array('msgtype'=>10))}" class="dropdown-toggle">
+                <i class="icon-tags"></i>
+                <span class="menu-text"> 泥面塑</span>
+            </a>
+        </li>
+        <li>
             <a href="{:U('Scrollimg/getlist')}" class="dropdown-toggle">
                 <i class="icon-tags"></i>
-                <span class="menu-text"> 轮播图管理</span>
+                <span class="menu-text"> 轮播图</span>
             </a>
         </li>
     </ul><!-- /.nav-list -->
