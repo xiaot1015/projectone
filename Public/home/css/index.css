@@ -207,6 +207,57 @@ input, textarea, select { outline: medium none; overflow: auto; }
 .xiazai li a:hover{ color:#a40000;}
 
 
+.categorylist {
+    height: 44px;
+    line-height: 44px;
+    border-bottom: 2px solid #c2c0bb;
+    color: #1e1e1e;
+    font-size: 18px;
+    margin-bottom: 50px;
+    margin-left: 150px;
+}
+.categoryname {
+    width: 150px;
+    text-align: center;
+    position: relative;
+    float: left;
+    cursor: pointer;
+}
+.categoryname.act {
+    border-bottom: 2px solid #333;
+    font-weight: 700;
+}
+.bbox {
+    width: 105%;
+}
+.works{}
+.works .workone {
+    width: 230px;
+    float: left;
+    margin: 40px 24px 0 0;
+    background: #fff;
+}
+.works .workone .imgi {
+    position: relative;
+    display: block;
+}
+.works .workone img {
+    width: 100%;
+    height: 230px;
+}
+.works .workone:hover img{ transform: scale(1.1); }
+.works .workone .imgi span {
+    position: absolute;
+    width: 150px;
+    height: 24px;
+    line-height: 24px;
+    background-color: #BEBFC3;
+    left: 0;
+    top: 0;
+    text-indent: 10px;
+    color: #fff;
+}
+
 
 
 

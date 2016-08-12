@@ -5,7 +5,7 @@
 <div class="page-content">
 
   <div class="row">
-    <div class="col-xs-12">
+    <div class="col-xs-6">
       <!-- PAGE CONTENT BEGINS -->
       <form class="form-horizontal" role="form" action="" method="post" onsubmit="return sub();">
 
@@ -18,7 +18,33 @@
          <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1">描述: </label>
           <div class="col-sm-9">
-              <input type="text" id="introduction" name="introduction" class="col-xs-10 col-sm-5" value="{$info.introduction}">
+              <textarea id="introduction" name="introduction" class="col-xs-10 col-sm-5" style="min-height:100px;max-height:100px;max-width:400px;min-width:350px;" >
+                  {$info.introduction}
+              </textarea>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传小图: </label>
+          <div class="col-sm-9">
+              <input type="file" id="smallpic" name="smallpic" value=""/>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">图片地址: </label>
+          <div class="col-sm-9">
+              <input type="text" disabled id="thumb_url" name="thumb_url" class="col-xs-10 col-sm-5" value="{$info.video_url}">
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传附件: </label>
+          <div class="col-sm-9">
+              <input type="file" id="fujian" name="fujian" value=""/>
+          </div>
+        </div>
+         <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">附件地址: </label>
+          <div class="col-sm-9">
+              <input type="text" disabled id="fujian_url" name="fujian_url" class="col-xs-10 col-sm-5" value="{$info.video_url}">
           </div>
         </div>
          <div class="form-group">

@@ -30,13 +30,27 @@ class MsgAction extends Action{
 
         //dongtai  
         $dongtailist = M('tb_msg')->where("type=%d",0)->order("id desc")->limit(4)->select();
+        foreach($dongtailist as $key => &$val){
+            if($key == 0){
+                $val['title'] = mb_substr($val['title'],0,18,'utf-8');
+            }else{
+                $val['title'] = mb_substr($val['title'],0,30,'utf-8');
+            }
+        }
         $dongtaiinfo = array_shift($dongtailist);
 
         //scroll  
         $scrollimglist = M('tb_scroll_img')->order("id desc")->limit(8)->select();
 
         //tongzhi 
-        $tongzhilist = M('tb_msg')->where("type=%d",4)->order("id desc")->limit(4)->find();
+        $tongzhilist = M('tb_msg')->where("type=%d",4)->order("id desc")->limit(4)->select();
+        foreach($tongzhilist as $key => &$val){
+            if($key == 0){
+                $val['title'] = mb_substr($val['title'],0,30,'utf-8');
+            }else{
+                $val['title'] = mb_substr($val['title'],0,30,'utf-8');
+            }
+        }
 
         $this->assign('tongzhilist',$tongzhilist);
         $this->assign('scrollimglist',$scrollimglist);
@@ -59,6 +73,13 @@ class MsgAction extends Action{
         $this->assign("info",$info);
         $this->display();
     }
+    public function detail($type){
+        if(empty($type)) $this->error("wrong page");
+
+        $info = M('tb_msg')->where("type=%d",$type)->find();
+        $this->assign("info",$info);
+        $this->display("dongtai");
+    }
 
     public function getlist($msgtype){
         $msgtype = intval($msgtype);
@@ -78,33 +99,37 @@ class MsgAction extends Action{
 		$this->display("dongtailist");
 	}
     public function preview(){
+        $mtype = $this->_param("type");
         $limit = 20;
         //scroll  
         $scrollimglist = M('tb_scroll_img')->order("id desc")->limit(8)->select();
         $this->assign("list",$list);
-		$this->display("dongtailist");
+		$this->display("zhanlanlist");
 	}
 
     public function award(){
         $this->getlist(3);
 	}
     public function zhubianlist(){
-        $this->getlist(7);
+        $this->detail(7);
 	}
     public function caoliulist(){
-        $this->getlist(8);
+        $this->detail(8);
 	}
 
     public function taocilist(){
-        $this->getlist(9);
+        $this->detail(9);
 	}
 
     public function jianzhilist(){
-        $this->getlist(5);
+        $this->detail(5);
 	}
 
     public function cixiulist(){
-        $this->getlist(10);
+        $this->detail(6);
+	}
+    public function nimianlist(){
+        $this->detail(10);
 	}
 
     private function getListByType($msgtype =0 , $limit = 1){

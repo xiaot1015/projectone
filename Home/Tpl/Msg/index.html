@@ -92,7 +92,7 @@
       <a href="{:U('Msg/tongzhilist')}" class="more">更多>></a > </div>
     <ul class="bisai_list">
     <foreach name="tongzhilist" item="tzinfo">
-      <li><a target="_bank" href="{:U('Msg/dongtai',array('id'=>$dtinfo['id']))}">{$dtinfo.title}</a></li>
+      <li><a target="_bank" href="{:U('Msg/dongtai',array('id'=>$tzinfo['id']))}">{$tzinfo.title}</a></li>
      </foreach>
     </ul>
   </div>
@@ -107,12 +107,12 @@
 <!--比赛预览-->
 <div class="yulan_top"></div>
 <div class="yulan_xia">
-  <div class="yulan1"><a href="#"><img src="__PUBLIC__/home/images/yulan (6).jpg" width="531" height="278" /></a></div>
-  <div class="yulan2"><a href="#"><img src="__PUBLIC__/home/images/yulan (1).jpg" width="751" height="514" /></a></div>
-  <div class="yulan3"><a href="#"><img src="__PUBLIC__/home/images/yulan (2).jpg" width="287" height="551" /></a></div>
-  <div class="yulan4"><a href="#"><img src="__PUBLIC__/home/images/yulan (3).jpg" width="233" height="230" /></a></div>
-  <div class="yulan5"><a href="#"><img src="__PUBLIC__/home/images/yulan (4).jpg" width="508" height="312" /></a></div>
-  <div class="yulan6"><a href="#"><img src="__PUBLIC__/home/images/yulan (5).jpg" width="479" height="309" /></a></div>
+    <div class="yulan1"><a href="{:U('Msg/preview',array('type'=>6))}"><img src="__PUBLIC__/home/images/yulan (6).jpg" width="531" height="278" /></a></div>
+  <div class="yulan2"><a href="{:U('Msg/preview',array('type'=>5))"><img src="__PUBLIC__/home/images/yulan (1).jpg" width="751" height="514" /></a></div>
+  <div class="yulan3"><a href="{:U('Msg/preview',array('type'=>10))"><img src="__PUBLIC__/home/images/yulan (2).jpg" width="287" height="551" /></a></div>
+  <div class="yulan4"><a href="{:U('Msg/preview',array('type'=>9))"><img src="__PUBLIC__/home/images/yulan (3).jpg" width="233" height="230" /></a></div>
+  <div class="yulan5"><a href="{:U('Msg/preview',array('type'=>8))"><img src="__PUBLIC__/home/images/yulan (4).jpg" width="508" height="312" /></a></div>
+  <div class="yulan6"><a href="{:U('Msg/preview',array('type'=>7))"><img src="__PUBLIC__/home/images/yulan (5).jpg" width="479" height="309" /></a></div>
   <div class="clear"></div>
 </div>
 <!--组织机构-->
