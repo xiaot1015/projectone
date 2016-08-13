@@ -14,6 +14,7 @@ CREATE TABLE `tb_msg` (
   `ctime` datetime  NULL COMMENT '插入时间', 
   `content` text NULL comment '内容', 
   `status` int(1) NULL DEFAULT '0' comment '状态', 
+  `fujians` varchar(200) NULL DEFAULT '' COMMENT '附件',
   PRIMARY KEY (`id`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 
 ```

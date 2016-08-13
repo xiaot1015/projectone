@@ -123,7 +123,7 @@ class MsgAction extends Action{
         $offset = $p * $limit ;
         //scroll  
         $count = M('tb_msg')->where("type = %d ",$mtype)->count();
-        $maxpage = int($count % $limit);
+        $maxpage = (int)($count % $limit);
         $maxpage = ($maxpage <= 1)?1:$maxpage;
         $list = M('tb_msg')->where("type = %d ",$mtype)->order("id desc")->limit($offset.",".$limit)->select();
         $this->assign("list",$list);
