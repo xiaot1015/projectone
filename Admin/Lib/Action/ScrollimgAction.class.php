@@ -18,12 +18,12 @@ class ScrollImgAction extends Action{
 		$where .= $this->_change_to_wherestr($wherearr);
 
 		import("ORG.Util.Page");
-		$count = $model->where($where)->count();
+		$count = $model->where("type=0")->count();
 		$p = new Page($count,self::PAGESIZE);
 		$limit = $p->firstRow.','.$p->listRows;
 		$page = $p->show();
 		
-		$list = $model->where($where)->order("id desc")->limit($limit)->select();
+		$list = $model->where("type=0")->order("id desc")->limit($limit)->select();
         
 		$this->assign("page",$page);
 		$this->assign("list",$list);

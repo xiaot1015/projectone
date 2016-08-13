@@ -11,11 +11,9 @@
 </div>
 	<ul class="xiazai">
 	<h1>附件下载：</h1>
-		<li><a href="__PUBLIC__/fujian/1zhubiandasaizhengjigonggao.docx">附件1：中国传统工艺（竹编）大赛征集公告.docx</a></li>
-		<li><a href="__PUBLIC__/fujian/2gubiandasaizhengjiguize.docx">附件2：中国传统工艺（竹编）大赛征集规则.docx</a></li>
-		<li><a href="__PUBLIC__/fujian/3zhubiandasaibaomingbiao.docx">附件3：中国传统工艺（竹编）大赛参赛报名表.docx</a></li>
-		<li><a href="__PUBLIC__/fujian/4zhubiandasaichengnuoshu.docx">附件4：中国传统工艺（竹编）大赛参赛者承诺书.docx</a></li>
-		<li><a href="__PUBLIC__/fujian/5zhubiandasaipingxuanguize.docx">附件5：中国传统工艺（竹编）大赛评选规则.docx</a></li>		
+        <foreach name="fjlist" item="fjinfo">
+        <li><a href="{$fjinfo.imgs}">{$fjinfo.title}</a></li>
+        </foreach>
 	</ul>
 </div>
 <!--列表内容结束-->

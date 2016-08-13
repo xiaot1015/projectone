@@ -17,7 +17,7 @@
     <div id="worksBox" class="bbox clearfix">
      <foreach name="list" item="pinfo">
       <div class="workone">
-          <a href="{:U('Msg/dongtai',array('id'=>$pfinfo['id']))}" class="imgi"> 
+          <a href="{:U('Msg/dongtai',array('id'=>$pinfo['id']))}" class="imgi"> 
             <img src="{$pinfo.thumb_img}" alt="">
             <span>{$pinfo.title}</span></a>        
     </div>
@@ -41,10 +41,11 @@ current：当前页
 <script src="__PUBLIC__/home/js/jquery.page.js"></script>
 <script>
     $(".tcdPageCode").createPage({
-        pageCount:1,
+        pageCount:"{$maxpage}",
         current:1,
         backFn:function(p){
-            console.log(p);
+        var url = "{:U('Msg/preview',array('msgtype'=>$msgtype))}?p="+p;
+        window.location.href=url;
         }
     });
 </script>
@@ -56,14 +57,8 @@ current：当前页
     });
     $(".categoryname").click(function(){
         var mtype = $(this).attr("val");
-        var url = "{:U('Msg/previewto')}" ;
-        $.get(url,{type:mtype},function(data){
-            if(data.status == 1){
-                window.location.href=data.info;
-            }else{
-                alert("jump error");
-            }
-        });
+        var url = "{:U('Msg/preview')}?type="+mtype ;
+        window.location.href=url;
     });
 </script>
 

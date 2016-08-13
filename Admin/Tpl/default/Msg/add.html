@@ -15,7 +15,7 @@
               <input type="text" id="title" name="title" class="col-xs-10 col-sm-5" value="{$info.title}">
           </div>
         </div>
-        <if condition = "($msgtype == 2 or $msgtype lt 14)">
+        <if condition = "($msgtype == 2 ) or ($msgtype gt 14)">
          <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1">类型: </label>
           <div class="col-sm-9">

@@ -46,6 +46,8 @@ class MsgAction extends Action{
 			$this->assign("info",$info);
         }
         $this->assign("optlist",$this->optarr);
+        $this->assign("optids",array_keys($this->optarr));
+		$this->assign("msgtype",$msgtype);
         $this->assign("type",$type);
 		$this->display();
 	}

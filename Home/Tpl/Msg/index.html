@@ -80,11 +80,11 @@
       <a href="{:U('Msg/dongtailist')}" class="more">更多>></a > </div>
     <div class="bisai_z">
         <h1>{$dongtaiinfo.title}</h1>
-        <p>{$dongtaiinfo.introduction}<a target="_bank" href="{:U('Msg/dongtai',array('id'=>$dongtaiinfo['id']))}">【详情】</a></p>
+        <p>{$dongtaiinfo.introduction}<a   href="{:U('Msg/dongtai',array('id'=>$dongtaiinfo['id']))}">【详情】</a></p>
     </div>
     <ul class="bisai_list">
     <foreach name="dongtailist" item="dtinfo">
-    <li><a target="_bank" href="{:U('Msg/dongtai',array('id'=>$dtinfo['id']))}">{$dtinfo.title}</a></li>
+    <li><a   href="{:U('Msg/dongtai',array('id'=>$dtinfo['id']))}">{$dtinfo.title}</a></li>
      </foreach>
     </ul>
     <div class="bisai_rightxia">
@@ -92,7 +92,7 @@
       <a href="{:U('Msg/tongzhilist')}" class="more">更多>></a > </div>
     <ul class="bisai_list">
     <foreach name="tongzhilist" item="tzinfo">
-      <li><a target="_bank" href="{:U('Msg/dongtai',array('id'=>$tzinfo['id']))}">{$tzinfo.title}</a></li>
+      <li><a   href="{:U('Msg/dongtai',array('id'=>$tzinfo['id']))}">{$tzinfo.title}</a></li>
      </foreach>
     </ul>
   </div>

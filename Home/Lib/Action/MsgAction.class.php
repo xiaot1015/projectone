@@ -33,6 +33,7 @@ class MsgAction extends Action{
         foreach($dongtailist as $key => &$val){
             if($key == 0){
                 $val['title'] = mb_substr($val['title'],0,18,'utf-8');
+                $val['introduction'] = mb_substr($val['introduction'],0,55,'utf-8');
             }else{
                 $val['title'] = mb_substr($val['title'],0,30,'utf-8');
             }
@@ -40,10 +41,10 @@ class MsgAction extends Action{
         $dongtaiinfo = array_shift($dongtailist);
 
         //scroll  
-        $scrollimglist = M('tb_scroll_img')->order("id desc")->limit(8)->select();
+        $scrollimglist = M('tb_scroll_img')->where('type = 0')->order("id desc")->limit(8)->select();
 
         //tongzhi 
-        $tongzhilist = M('tb_msg')->where("type=%d",4)->order("id desc")->limit(4)->select();
+        $tongzhilist = M('tb_msg')->where("type=%d",4)->order("id desc")->limit(5)->select();
         foreach($tongzhilist as $key => &$val){
             if($key == 0){
                 $val['title'] = mb_substr($val['title'],0,30,'utf-8');
@@ -70,7 +71,12 @@ class MsgAction extends Action{
         if(empty($id)) $this->error("wrong id");
 
         $info = M('tb_msg')->where("id=%d",$id)->find();
+        $fjlist = array();
+        if(!empty($info['fujians'])){
+            $fjlist = M('tb_scroll_img')->where('id in (%s)',$info['fujians'])->order("id desc")->limit(10)->select();
+        }
         $this->assign("info",$info);
+        $this->assign("fjlist",$fjlist);
         $this->display();
     }
     public function detail($type){
@@ -83,30 +89,46 @@ class MsgAction extends Action{
 
     public function getlist($msgtype){
         $msgtype = intval($msgtype);
+        $p = (int)$this->_param("p");
         if(empty($msgtype) || $msgtype > 11) $this->error("error");
         $limit = 20;
-        $list = $this->getListByType($msgtype,$limit);
+        list($list,$count) = $this->getListByType($msgtype,$p,$limit);
+        $maxpage = (int)($count / $limit);
+        $maxpage = ($maxpage <= 1)?1:$maxpage;
         $this->assign("msgtype",$msgtype);
         $this->assign("list",$list);
+        $this->assign("maxpage",$maxpage);
 		$this->display("dongtailist");
 	}
     public function dongtailist(){
         $limit = 20;
-        $msgtype = 0;
-        $list = $this->getListByType($msgtype,$limit);
+        $msgtype = $this->_param("msgtype");
+        $p = $this->_param("p");
+        $msgtype = empty($msgtype)?0:$msgtype;
+        list($list,$count) = $this->getListByType($msgtype,$p,$limit);
+        $maxpage = (int)($count / $limit);
+        $maxpage = ($maxpage <= 1)?1:$maxpage;
         $this->assign("msgtype",$msgtype);
         $this->assign("list",$list);
+        $this->assign("maxpage",$maxpage);
 		$this->display("dongtailist");
 	}
     public function preview(){
         $marr = array(15,16,17,18,19,20);
         $mtype = $this->_param("type");
-        if(empty($mtype) || !in_array($mtype,$marr)) $this->error("error");
+        $p = (int)$this->_param("p");
+        if(empty($mtype)) $mtype = 15;
+        if( !in_array($mtype,$marr)) $this->error("error");
         $limit = 10;
+        $offset = $p * $limit ;
         //scroll  
-        $list = M('tb_msg')->where("type = %d ",$mtype)->order("id desc")->limit($limit)->select();
+        $count = M('tb_msg')->where("type = %d ",$mtype)->count();
+        $maxpage = int($count % $limit);
+        $maxpage = ($maxpage <= 1)?1:$maxpage;
+        $list = M('tb_msg')->where("type = %d ",$mtype)->order("id desc")->limit($offset.",".$limit)->select();
         $this->assign("list",$list);
         $this->assign("type",$mtype);
+        $this->assign("maxpage",$maxpage);
 		$this->display("zhanlanlist");
 	}
     public function previewto(){
@@ -143,10 +165,12 @@ class MsgAction extends Action{
         $this->detail(10);
 	}
 
-    private function getListByType($msgtype =0 , $limit = 1){
+    private function getListByType($msgtype =0 ,$p = 0, $limit = 1){
         $model = M('tb_msg');
-        $list = $model->where("type = %d ",$msgtype)->limit($limit)->select();
-        return $list;
+        $offset = $p * $limit;
+        $count = $model->where("type = %d",$msgtype)->count();
+        $list = $model->where("type = %d ",$msgtype)->order("id desc")->limit($offset.",".$limit)->select();
+        return array($list,$count);
         
     }
 	/**
