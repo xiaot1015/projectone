@@ -27,7 +27,13 @@ return array(
         '7' => 'zhubian',
         '8' => 'caoliu',
         '9' => 'taoci',
-        '10' => 'nimian',
+        '10' => 'nimian_p',
+        '15' => 'jianzhi_p',
+        '16' => 'cixiu_p',
+        '17' => 'zhubian_p',
+        '18' => 'caoliu_p',
+        '19' => 'taoci_p',
+        '20' => 'nimian_p',
     ),
 );
 ?>

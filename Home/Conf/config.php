@@ -13,6 +13,7 @@ return array(
     'TOKEN_ON' => true,
     'URL_MODEL' => 1, //pathinfo模式
     'URL_CASE_INSENSITIVE' => true, //设置url小写
+    //'URL_HTML_SUFFIX' => '',
     'TOKEN_ON' => false,
 );
 ?>

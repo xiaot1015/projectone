@@ -99,12 +99,23 @@ class MsgAction extends Action{
 		$this->display("dongtailist");
 	}
     public function preview(){
+        $marr = array(15,16,17,18,19,20);
         $mtype = $this->_param("type");
-        $limit = 20;
+        if(empty($mtype) || !in_array($mtype,$marr)) $this->error("error");
+        $limit = 10;
         //scroll  
-        $scrollimglist = M('tb_scroll_img')->order("id desc")->limit(8)->select();
+        $list = M('tb_msg')->where("type = %d ",$mtype)->order("id desc")->limit($limit)->select();
         $this->assign("list",$list);
+        $this->assign("type",$mtype);
 		$this->display("zhanlanlist");
+	}
+    public function previewto(){
+        $marr = array(15,16,17,18,19,20);
+        $mtype = $this->_param("type");
+        if(empty($mtype) || !in_array($mtype,$marr)){
+            $this->ajaxReturn("error ","",0);
+        }
+        $this->ajaxReturn("ok",U('Msg/preview',array('type'=>$mtype)),1);
 	}
 
     public function award(){

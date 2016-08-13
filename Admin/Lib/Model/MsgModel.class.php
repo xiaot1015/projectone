@@ -15,6 +15,7 @@ class MsgModel {
         'thumb_img' => '',
         'video_url' => '',
         'content' => '',
+        'fujians' => '',
         'status' => '',
     );
     private $fieldsarr ;

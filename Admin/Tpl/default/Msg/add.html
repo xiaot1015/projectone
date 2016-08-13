@@ -15,6 +15,19 @@
               <input type="text" id="title" name="title" class="col-xs-10 col-sm-5" value="{$info.title}">
           </div>
         </div>
+        <if condition = "($msgtype == 2 or $msgtype lt 14)">
+         <div class="form-group">
+          <label class="col-sm-3 control-label no-padding-right" for="form-field-1">类型: </label>
+          <div class="col-sm-9">
+              <select name="previewtype" id="previewtype">
+                  <option value=""> --请选择--</option>
+                  <foreach name="optlist" item="opt" key="opk">
+                  <option value="{$opk}" <?php if($opk == $info['type']){ ?>selected <?php }?>> {$opt}</option>
+                  </foreach>
+              </select>
+          </div>
+        </div>
+        </if>
          <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1">描述: </label>
           <div class="col-sm-9">
@@ -44,13 +57,20 @@
          <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1">附件地址: </label>
           <div class="col-sm-9">
-              <input type="text" disabled id="fujian_url" name="fujian_url" class="col-xs-10 col-sm-5" value="{$info.video_url}">
+              <table id="fjtable" border="1">
+                  <tr>
+                      <input type="hidden" name="fujianid" value="" />
+                      <td>名称</td><td><a href="#" dataid="">操作</a></td></tr>
+              <foreach name="fujianlist" item="fjinfo">
+              <tr><td>{$fjinfo.imgs}</td><td><a dataid = "{$fjinfo['id']}" href="{:U('Scrollimg/del',array('id'=>$fjinfo['id']))}">删除</a></td></tr>
+              </foreach>
+              </table>
           </div>
         </div>
          <div class="form-group">
           <label class="col-sm-3 control-label no-padding-right" for="form-field-1">上传视频: </label>
           <div class="col-sm-9">
-              <input type="file" id="uppic" name="uppic" value=""/>
+              <input type="file" id="upmv" name="upmv" value=""/>
           </div>
         </div>
          <div class="form-group">
@@ -88,11 +108,58 @@
 </div><!-- /.page-content -->
 <script>
 $(document).ready(function(){
-      var upurl = "{:U('Upload/uploadvideo')}";
-     $("#uppic").change(function() {
-          $("#uppic").wrap("<form class='myupload' id='myupload' action='" + upurl + "' method='post' enctype='multipart/form-data'></form>");
-          $(".myupload").attr("action", upurl + '?time=' + Math.random());
-          var filepath = $("#uppic").val();
+      var uppic= "{:U('Upload/uploadpic')}";
+     $("#fujian").change(function() {
+          uppic = "{:U('Upload/uploadfujian')}";
+          $("#fujian").wrap("<form class='myupload' id='myupload' action='" + uppic + "' method='post' ></form>");
+          $(".myupload").attr("action", uppic + '?time=' + Math.random());
+          var filepath = $("#fujian").val();
+          var extStart = filepath.lastIndexOf(".");
+          var ext = filepath.substring(extStart, filepath.length).toUpperCase();
+          //if (ext != ".MP4") {
+          if (ext != ".DOC" && ext != ".DOCX" ) {
+               alert('文件格式不对！');
+               return false;
+          }
+          var file_size = 0;
+          file_size = this.files[0].size;
+          if (file_size / 1024 / 1024 > 10) {
+               alert('文件大小不能超过10M');
+               return false;
+          }
+          setTimeout(function(){
+               $("#fujian").parent().ajaxSubmit({
+                    dataType : 'json',
+                    data : {
+                         'photofield' : 'fujian',
+                         'type' : 'fujian',
+                         'isdb' : '1'
+                    },
+                    type:'post',
+                    success : function(data) {
+                         if (data.status == 1) {
+                              var item = $("#fjtable").find("tr").last().clone();
+                              item.find("td").first().html(data.info.name);
+                              item.find("a").first().attr("dataid",data.info.id).html("删除");
+                              item.find("input").first().attr("value",data.info.id);
+                              $("#fjtable").append(item);
+                         }
+                    },
+                    error : function(xhr) {
+                         var msg = xhr.responseText;
+                         if(!msg){
+                              msg = '上传失败';
+                         }
+                         return false;
+                    }
+               });
+          }, 1000);
+     });
+     $("#upmv").change(function() {
+          upmv = "{:U('Upload/uploadvideo')}";
+          $("#upmv").wrap("<form class='myupload' id='myupload' action='" + uppic + "' method='post' enctype='multipart/form-data'></form>");
+          $(".myupload").attr("action", uppic + '?time=' + Math.random());
+          var filepath = $("#upmv").val();
           var extStart = filepath.lastIndexOf(".");
           var ext = filepath.substring(extStart, filepath.length).toUpperCase();
           if (ext != ".MP4") {
@@ -106,15 +173,57 @@ $(document).ready(function(){
                return false;
           }
           setTimeout(function(){
-               $("#uppic").parent().ajaxSubmit({
+               $("#upmv").parent().ajaxSubmit({
                     dataType : 'json',
                     data : {
-                         'photofield' : 'uppic'
+                         'photofield' : 'upmv',
+                         'type' : 'mv'
                     },
                     type:'post',
                     success : function(data) {
                          if (data.status == 1) {
                               $("#video_url").val(data.info);
+                         }
+                    },
+                    error : function(xhr) {
+                         var msg = xhr.responseText;
+                         if(!msg){
+                              msg = '上传失败';
+                         }
+                         return false;
+                    }
+               });
+          }, 1000);
+     });
+     $("#smallpic").change(function() {
+          uppic= "{:U('Upload/uploadpic')}";
+          $("#smallpic").wrap("<form class='myupload' id='myupload' action='" + uppic + "' method='post' enctype='multipart/form-data'></form>");
+          $(".myupload").attr("action", uppic + '?time=' + Math.random());
+          var filepath = $("#smallpic").val();
+          var extStart = filepath.lastIndexOf(".");
+          var ext = filepath.substring(extStart, filepath.length).toUpperCase();
+          //if (ext != ".MP4") {
+          if (ext != ".BMP" && ext != ".PNG" && ext != ".GIF" && ext != ".JPG" && ext != ".JPEG" && ext != ".BMP") {
+               alert('文件格式不对！');
+               return false;
+          }
+          var file_size = 0;
+          file_size = this.files[0].size;
+          if (file_size / 1024 / 1024 > 10) {
+               alert('文件大小不能超过10M');
+               return false;
+          }
+          setTimeout(function(){
+               $("#smallpic").parent().ajaxSubmit({
+                    dataType : 'json',
+                    data : {
+                         'photofield' : 'smallpic',
+                         'type' : 'pic'
+                    },
+                    type:'post',
+                    success : function(data) {
+                         if (data.status == 1) {
+                              $("#thumb_url").val(data.info);
                          }
                     },
                     error : function(xhr) {
@@ -143,10 +252,16 @@ function sub(){
 	var type = $("#type").val();
 	var introduction= $("#introduction").val();
 	var videourl= $("#video_url").val();
+	var imgurl= $("#thumb_url").val();
 	var msgtype = $("#msgtype").val();
+	var previewtype= $("#previewtype").val();
+    var fujianstr = '';
+    $("input[name='fujianid']").each(function(idx,obj){
+            fujianstr += $(this).val() + ","; 
+            });
 
     var url = "{:U('Msg/updateMsg')}";
-	$.post(url,{msgtype:msgtype,content:desc,introduction:introduction,videourl:videourl,title:title,type:type,id:id},function(data){
+	$.post(url,{previewtype:previewtype,imgurl:imgurl,fujianstr:fujianstr,msgtype:msgtype,content:desc,introduction:introduction,videourl:videourl,title:title,type:type,id:id},function(data){
 		if(data.status == "1"){
 			alert(data.info);
             window.location.href="{:U('Msg/getlist',array('msgtype'=>$msgtype))}";
