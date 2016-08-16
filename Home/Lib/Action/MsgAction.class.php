@@ -82,8 +82,13 @@ class MsgAction extends Action{
     public function detail($type){
         if(empty($type)) $this->error("wrong page");
 
-        $info = M('tb_msg')->where("type=%d",$type)->find();
+        $info = M('tb_msg')->where("type=%d",$type)->order("id desc")->find();
+        $fjlist = array();
+        if(!empty($info['fujians'])){
+            $fjlist = M('tb_scroll_img')->where('id in (%s)',$info['fujians'])->order("id desc")->limit(10)->select();
+        }
         $this->assign("info",$info);
+        $this->assign("fjlist",$fjlist);
         $this->display("dongtai");
     }
 

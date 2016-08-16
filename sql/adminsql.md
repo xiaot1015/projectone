@@ -27,6 +27,7 @@ CREATE TABLE `tb_scroll_img` (
   `imgs` varchar(1000) NULL DEFAULT '' COMMENT '轮播图地址，json格式',
   `title` varchar(200) NULL DEFAULT '' COMMENT '图标题',
   `ctime` datetime  NULL COMMENT '插入时间',
+  `type` int(1) NULL DEFAULT '0' comment '图片类型', 
   `status` int(1) NULL DEFAULT '0' comment '状态', 
   PRIMARY KEY (`id`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 
